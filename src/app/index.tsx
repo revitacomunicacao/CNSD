@@ -1,4 +1,6 @@
+import { useContent } from "@/hooks/useContent"
 import useSeo from "@/hooks/useSeo"
+import { IHome } from "./home/types"
 
 export default function HomePage() {
   useSeo({
@@ -7,10 +9,18 @@ export default function HomePage() {
     image: "https://via.placeholder.com/150",
     icon: "https://via.placeholder.com/150",  
   })
+
+  const { data : home,loading,error } = useContent<IHome>('/home')
+  console.log(home)
+  console.log("oi")
+  if(loading) return "carregando"
   return (
     <main style={{ padding: 20 }}>
-      <h1>Bem‑vindo ao Template React</h1>
-      <p>Use este projeto como base para seus sites institucionais.</p>
+      {home.map(({banners,id,title})=>(
+        <div>
+          {title}
+        </div>
+      ))}
     </main>
   )
 }
