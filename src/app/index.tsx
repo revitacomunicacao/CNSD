@@ -18,7 +18,7 @@ export default function HomePage() {
     <main style={{ padding: 20 }}>
       {home.map(({banners,id,title})=>(
         <div>
-          {title}
+          {title}     
         </div>
       ))}
     </main>
