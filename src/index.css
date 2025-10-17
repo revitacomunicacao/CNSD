@@ -118,3 +118,93 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Estilos para conteúdo HTML da API */
+.content-html p {
+  @apply mb-4 text-base leading-relaxed text-gray-700;
+}
+
+.content-html h1 {
+  @apply text-3xl font-bold mb-4 mt-6 text-primary;
+}
+
+.content-html h2 {
+  @apply text-2xl font-bold mb-3 mt-6 text-primary;
+}
+
+.content-html h3 {
+  @apply text-xl font-semibold mb-3 mt-4 text-primary;
+}
+
+.content-html h4 {
+  @apply text-lg font-semibold mb-2 mt-4 text-primary;
+}
+
+.content-html ul {
+  @apply list-disc list-inside mb-4 ml-4 space-y-2;
+}
+
+.content-html ol {
+  @apply list-decimal list-inside mb-4 ml-4 space-y-2;
+}
+
+.content-html li {
+  @apply text-base text-gray-700 leading-relaxed;
+}
+
+.content-html strong {
+  @apply font-bold text-gray-900;
+}
+
+.content-html em {
+  @apply italic;
+}
+
+.content-html a {
+  @apply text-blue-600 hover:text-blue-800 underline;
+}
+
+.content-html blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic my-4 text-gray-600;
+}
+
+.content-html code {
+  @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono;
+}
+
+.content-html pre {
+  @apply bg-gray-100 p-4 rounded overflow-x-auto mb-4;
+}
+
+.content-html img {
+  @apply max-w-full h-auto rounded mb-4;
+}
+
+.content-html table {
+  @apply w-full border-collapse mb-4;
+}
+
+.content-html th {
+  @apply bg-gray-100 border border-gray-300 px-4 py-2 text-left font-semibold;
+}
+
+.content-html td {
+  @apply border border-gray-300 px-4 py-2;
+}
+
+.content-html hr {
+  @apply my-6 border-gray-300;
+}
+
+/* Estilos específicos para classes do WordPress/Editor */
+.content-html .vc_row {
+  @apply mb-6;
+}
+
+.content-html .wpb_wrapper {
+  @apply space-y-4;
+}
+
+.content-html .vc_tta-panel-body {
+  @apply p-4;
+}
