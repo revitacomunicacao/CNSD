@@ -47,31 +47,64 @@ export default function HomePage() {
 
   return (
     <main>
-      {/* Banner full width */}
-      {banner?.foto ? (
-        <section className="w-full">
-          {href ? (
-            <a
-              href={href}
-              aria-label={banner?.nome || "Banner"}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src={banner.foto}
-                alt={banner?.nome || "Banner principal"}
-                className="block w-full h-auto object-cover"
-              />
-            </a>
-          ) : (
-            <img
-              src={banner.foto}
-              alt={banner?.nome || "Banner principal"}
-              className="block w-full h-auto object-cover"
-            />
-          )}
+      {/* HERO rotativo full-screen */}
+      {Array.isArray(banners) && banners.length > 0 && (
+        <section className="relative w-full min-h-[100svh] h-[100svh] overflow-hidden mb-[-25px] pb-0">
+          <Carousel
+            className="w-full h-full"
+            opts={{ align: "start", loop: true }}
+          >
+            <CarouselContent className="h-full">
+              {banners.map((b: any, idx: number) => {
+                const toHref = (link?: string) =>
+                  link
+                    ? /^https?:\/\//i.test(link)
+                      ? link
+                      : `https://${link}`
+                    : undefined;
+                const href = toHref(b?.link);
+
+                const Img = (
+                  <img
+                    src={b?.foto}
+                    alt={b?.nome || `Banner ${idx + 1}`}
+                    className="block w-full h-full object-cover"
+                    loading={idx === 0 ? "eager" : "lazy"}
+                  />
+                );
+
+                return (
+                  <CarouselItem
+                    key={`${idx}-${b?.foto || "banner"}`}
+                    className="basis-full h-full"
+                  >
+                    {href ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={b?.nome || "Banner"}
+                      >
+                        {Img}
+                      </a>
+                    ) : (
+                      Img
+                    )}
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+
+            {banners.length > 1 && (
+              <>
+                <CarouselPrevious className="left-4 bg-white/80 hover:bg-white text-[#0B2A4A]" />
+                <CarouselNext className="right-4 bg-white/80 hover:bg-white text-[#0B2A4A]" />
+              </>
+            )}
+          </Carousel>
         </section>
-      ) : null}
+      )}
+
       {/* Fique Ligado */}
       {fiqueLigado?.length ? (
         <section className="w-full bg-[#FFEB00] py-6">
