@@ -144,7 +144,12 @@ export default function HomePage() {
           <LuPencilRuler className="text-[#0B2A4A] text-[50px]" />
           <h3 className="text-[32px] font-semibold">Ensino CNSD</h3>
         </div>
-        <p className="mt-10">{ensinoCNSD}</p>
+        {ensinoCNSD ? (
+          <div
+            className="mt-10 text-[16px] leading-7 text-[#0B2A4A]"
+            dangerouslySetInnerHTML={{ __html: ensinoCNSD }}
+          />
+        ) : null}
 
         <div className="mx-auto px-4 mt-8">
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
