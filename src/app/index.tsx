@@ -3,6 +3,9 @@ import useSeo from "@/hooks/useSeo";
 import { IHome } from "./home/types";
 import { HiLightBulb } from "react-icons/hi";
 import { LuPencilRuler } from "react-icons/lu";
+import metodo1 from "@/assets/logo-omb.png";
+import metodo2 from "@/assets/logo-bernoulli.png";
+import fundodiferenciais from "@/assets/fundo-cursos-e-atividades.png";
 
 export default function HomePage() {
   useSeo({
@@ -22,6 +25,8 @@ export default function HomePage() {
   const banner = banners?.[0];
   const fiqueLigado = root?.fique_ligado ?? [];
   const ensinoCNSD = root?.ensino_cnsd;
+  const ensino = root?.ensino ?? [];
+  const diferenciais = root?.diferenciais ?? [];
 
   // normaliza link do banner (se vier sem protocolo)
   const href =
@@ -100,6 +105,131 @@ export default function HomePage() {
           <h3 className="text-[32px] font-semibold">Ensino CNSD</h3>
         </div>
         <p className="mt-10">{ensinoCNSD}</p>
+
+        <div className="mx-auto px-4 mt-8">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+            {ensino.map(({ nome, imagem, link }, idx) => {
+              const href =
+                link && /^https?:\/\//i.test(link)
+                  ? link
+                  : link
+                  ? `https://${link}`
+                  : undefined;
+
+              const Card = (
+                <div className="text-center">
+                  {/* círculo + imagem */}
+                  <div className="overflow-hidden flex justify-center">
+                    <img
+                      src={imagem}
+                      alt={nome}
+                      className="h-[320px] w-auto"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* título */}
+                  <h3 className="mt-4 text-sm font-extrabold tracking-wide text-[#0B2A4A] uppercase">
+                    {nome}
+                  </h3>
+                </div>
+              );
+
+              return (
+                <li key={`${idx}-${nome}`}>
+                  {href ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      {Card}
+                    </a>
+                  ) : (
+                    Card
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        <div className="flex justify-center gap-20 my-10">
+          <div className="flex flex-col gap-3">
+            <img src={metodo1} className="h-20 w-auto" />
+            <p className="font-semibold">Método de ensino Montessori</p>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <img src={metodo2} className="h-20 w-auto" />
+            <p className="font-semibold">
+              O sistema de ensino que mais aprova no ENEM
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="w-full py-12"
+        style={{
+          backgroundImage: `url(${fundodiferenciais})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="max-w-[1200px] mx-auto px-4">
+          <h2 className="text-center text-[30px] font-semibold text-[#0B2A4A] mb-8">
+            Diferenciais
+          </h2>
+
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            {diferenciais.map(({ nome, foto, link }, idx) => {
+              const href =
+                link && /^https?:\/\//i.test(link)
+                  ? link
+                  : link
+                  ? `https://${link}`
+                  : undefined;
+
+              const Card = (
+                <div className="text-center">
+                  {/* círculo com imagem */}
+                  <div className="overflow-hidden flex items-center justify-center">
+                    <img
+                      src={foto}
+                      alt={nome}
+                      className="w-auto h-65"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* título */}
+                  <h3 className="mt-4 text-sm font-bold tracking-wide text-[#0B2A4A] uppercase">
+                    {nome}
+                  </h3>
+                </div>
+              );
+
+              return (
+                <li key={`${idx}-${nome}`}>
+                  {href ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      {Card}
+                    </a>
+                  ) : (
+                    Card
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </section>
     </main>
   );
