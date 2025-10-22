@@ -89,7 +89,7 @@ export const Header = () => {
         },
         {
           name: "Trabalhe Conosco",
-          href: "https://cnsd.com.br/trabalhe-conosco",
+          href: "https://veritascnsd.tk/veritas_educacional/trabalhe_conosco",
         },
       ]
     },
