@@ -128,7 +128,7 @@ export default function NossaEstrutura() {
                 ))}
               </div>
             )}
-          </section>
+    </section>
         </main>
       ))}
     </main>

@@ -269,7 +269,7 @@ export default function SecretariaDigital() {
                   {errors.segmento && (
                     <span className="text-sm text-red-600">{errors.segmento}</span>
                   )}
-                </div>
+              </div>
                 
                 <button
                   type="submit"
