@@ -42,7 +42,7 @@ export const Header = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (searchTerm.trim()) {
-      window.open(`https://cnsd.com.br/?s=${encodeURIComponent(searchTerm)}`, '_blank')
+      window.open(`/?s=${encodeURIComponent(searchTerm)}`, '_blank')
     }
   }
 
@@ -69,23 +69,23 @@ export const Header = () => {
   const menu: MenuItem[] = [
     {
       name: "O Colégio",
-      href: "https://cnsd.com.br/#",
+      href: "/#",
       submenu: [
         {
           name: "Nossa História",
-          href: "https://cnsd.com.br/nossa-historia",
+          href: "/nossa-historia",
         },
         {
           name: "Nossa Missão",
-          href: "https://cnsd.com.br/nossa-missao",
+          href: "/nossa-missao",
         },
         {
           name: "Secretaria Acadêmica",
-          href: "https://cnsd.com.br/secretaria-cademica",
+          href: "/secretaria-cademica",
         },
         {
           name: "Estrutura Física",
-          href: "https://cnsd.com.br/estrutura-fisica",
+          href: "/estrutura-fisica",
         },
         {
           name: "Trabalhe Conosco",
@@ -95,93 +95,93 @@ export const Header = () => {
     },
     {
       name: "Ensino",
-      href: "https://cnsd.com.br/#",
+      href: "/#",
       submenu: [
         {
           name: "Proposta Pedagógica",
-          href: "https://cnsd.com.br/proposta-pedagogica",
+          href: "/proposta-pedagogica",
           submenu: [
             {
               name: "Formação Continua",
-              href: "https://cnsd.com.br/formacao-continua"
+              href: "/formacao-continua"
             }
           ]
         },
         {
           name: "Educação Infantil",
-          href: "https://cnsd.com.br/#",
+          href: "/#",
           submenu: [
             {
               name: "Base Teórica-Pedagógica",
-              href: "https://cnsd.com.br/base-teorica-pedagogicaeducacao-infantil"
+              href: "/base-teorica-pedagogicaeducacao-infantil"
             }
           ]
         },
         {
           name: "Ensino Fundalmental Anos Iniciais",
-          href: "https://cnsd.com.br/#",
+          href: "/#",
           submenu: [
             {
               name: "Base Teórica-Pedagógica",
-              href: "https://cnsd.com.br/base-teorica-pedagogicaanos-iniciais"
+              href: "/base-teorica-pedagogicaanos-iniciais"
             }
           ]
         },
         {
           name: "Ensino Fundalmental Anos Finais",
-          href: "https://cnsd.com.br/#",
+          href: "/#",
           submenu: [
             {
               name: "Base Teórica-Pedagógica",
-              href: "https://cnsd.com.br/base-teorica-pedagogicaanos-finais"
+              href: "/base-teorica-pedagogicaanos-finais"
             },
             {
               name: "Desafios e Simulados",
-              href: "https://cnsd.com.br/desafios-e-simulados"
+              href: "/desafios-e-simulados"
             },
           ]
         },
         {
           name: "Ensino Médio",
-          href: "https://cnsd.com.br/#",
+          href: "/#",
           submenu: [
             {
               name: "Base Teórica-Pedagógica",
-              href: "https://cnsd.com.br/base-teorica-pedagogica"
+              href: "/base-teorica-pedagogica"
             },
             {
               name: "Simulados",
-              href: "https://cnsd.com.br/simulados"
+              href: "/simulados"
             },
             {
               name: "Formandos",
-              href: "https://cnsd.com.br/formandos"
+              href: "/formandos"
             },
             {
               name: "Aprovados no Vestibular",
-              href: "https://cnsd.com.br/aprovados-no-vestibular"
+              href: "/aprovados-no-vestibular"
             },
             {
               name: "Pré-Vestibular",
-              href: "https://cnsd.com.br/pre-vestibular"
+              href: "/pre-vestibular"
             },
           ]
         },
         {
           name: "Ensino Técnico",
-          href: "https://cnsd.com.br/#",
+          href: "/#",
           submenu: [
             {
               name: "Base Teórica-Pedagógica",
-              href: "https://cnsd.com.br/base-teorica-pedagogica-tecnico"
+              href: "/base-teorica-pedagogica-tecnico"
             },
             {
               name: "Formação Continua",
-              href: "https://cnsd.com.br/formacao-continua"
+              href: "/formacao-continua"
             },
             {
               name: "Administração",
-              href: "https://cnsd.com.br/administracao"
+              href: "/administracao"
             },
           ]
         },
@@ -189,52 +189,52 @@ export const Header = () => {
     },
     {
       name: "Atividades",
-      href: "https://cnsd.com.br/#",
+      href: "/#",
       submenu: [
         {
           name: "Esporte",
-          href: "https://cnsd.com.br/esporte",
+          href: "/esporte",
           submenu: [
             {
               name: "Escola de Esportes",
-              href: "https://cnsd.com.br/escola-de-esportes",
+              href: "/escola-de-esportes",
             },
             {
               name: "Olimpíada",
-              href: "https://cnsd.com.br/olimpiada",
+              href: "/olimpiada",
             },
           ]
         },
         {
           name: "Pastoral",
-          href: "https://cnsd.com.br/pastoral"
+          href: "/pastoral"
         },
         {
           name: "Biblioteca",
-          href: "https://cnsd.com.br/biblioteca"
+          href: "/biblioteca"
         },
         {
           name: "Contraturno",
-          href: "https://cnsd.com.br/contraturno",
+          href: "/contraturno",
           submenu: [
             {
               name: "Período de Permanência Integral",
-              href: "https://cnsd.com.br/periodo-de-permanencia-integral/"
+              href: "/periodo-de-permanencia-integral/"
             }, {
               name: "Flauta",
-              href: "https://cnsd.com.br/flauta"
+              href: "/flauta"
             }, {
               name: "Apoio Pedagógico Fundamental Anos Iniciais",
-              href: "https://cnsd.com.br/apa-efai"
+              href: "/apa-efai"
             }, {
               name: "Plantão de Apoio Pedagógico - Fundamental Anos Finais",
-              href: "https://cnsd.com.br/plantao-de-estudo-efaf"
+              href: "/plantao-de-estudo-efaf"
             }, {
               name: "Plantão de Apoio Pedagógico - Ensino Médio",
-              href: "https://cnsd.com.br/plantao-de-estudo-em"
+              href: "/plantao-de-estudo-em"
             }, {
               name: "Treinamentos",
-              href: "https://cnsd.com.br/treinamentos"
+              href: "/treinamentos"
             },
           ]
         },
@@ -242,44 +242,44 @@ export const Header = () => {
     },
     {
       name: "Responsabilidade Social",
-      href: "https://cnsd.com.br/#",
+      href: "/#",
       submenu: [
         {
           name: "Linha do Tempo",
-          href: "https://cnsd.com.br/linha-do-tempo"
+          href: "/linha-do-tempo"
         },
         {
           name: "Ensino Técnico",
-          href: "https://cnsd.com.br/ensino-tecnico"
+          href: "/ensino-tecnico"
         }, {
           name: "Processo Seletivo",
-          href: "https://cnsd.com.br/processo-seletivo"
+          href: "/processo-seletivo"
         }, {
           name: "Parceiros",
-          href: "https://cnsd.com.br/parceiros"
+          href: "/parceiros"
         },
       ]
     },
     {
       name: "Publicações",
-      href: "https://cnsd.com.br/#",
+      href: "/#",
       submenu: [
         {
           name: "Revista/Informativo",
-          href: "https://cnsd.com.br/revista-informatica"
+          href: "/revista-informatica"
         },
         {
           name: "Na Mídia",
-          href: "https://cnsd.com.br/na-midia"
+          href: "/na-midia"
         }, {
           name: "Notícias",
-          href: "https://cnsd.com.br/noticias"
+          href: "/noticias"
         },
       ]
     },
     {
       name: "Fale Conosco",
-      href: "https://cnsd.com.br/faleconosco"
+      href: "/faleconosco"
     }
   ]
   return (
@@ -449,7 +449,7 @@ export const Header = () => {
                   </DialogHeader>
                   <div className="flex flex-col gap-3 mt-4">
                     <a
-                      href="https://cnsd.com.br/cadastro-egresso/"
+                      href="/cadastro-egresso/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center px-6 py-4 bg-[#0b2255] text-white font-bold rounded-lg hover:bg-[#0b2255]/90 transition-colors duration-200"
@@ -458,7 +458,7 @@ export const Header = () => {
                       FAÇA SEU CADASTRO
                     </a>
                     <a
-                      href="https://cnsd.com.br/depoimento-egresso/"
+                      href="/depoimento-egresso/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center px-6 py-4 bg-[#0b2255] text-white font-bold rounded-lg hover:bg-[#0b2255]/90 transition-colors duration-200"
@@ -479,7 +479,7 @@ export const Header = () => {
               </a>
               
               <a 
-                href="https://cnsd.com.br/trabalhe-conosco/" 
+                href="/trabalhe-conosco/" 
                 className="flex flex-col items-center gap-1 text-[#b3b3b3] hover:text-[#0b2255] transition-colors group"
               >
                 <FaUsers size={28} className="group-hover:scale-110 transition-transform" />
@@ -487,7 +487,7 @@ export const Header = () => {
               </a>
               
               <a 
-                href="https://cnsd.com.br/tv-cnsd/" 
+                href="/tv-cnsd/" 
                 className="flex flex-col items-center gap-1 text-[#b3b3b3] hover:text-[#0b2255] transition-colors group"
               >
                 <PiTelevisionBold size={28} className="group-hover:scale-110 transition-transform" />

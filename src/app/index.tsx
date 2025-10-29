@@ -47,9 +47,11 @@ export default function HomePage() {
 
   return (
     <main>
+      {/* */}
       {/* HERO rotativo full-screen */}
+      {/* */}
       {Array.isArray(banners) && banners.length > 0 && (
-        <section className="relative w-full min-h-[100svh] h-[100svh] overflow-hidden mb-[-25px] pb-0">
+        <section className="relative w-full h-[25svh] md:min-h-[100svh] md:h-[100svh] overflow-hidden mb-[-25px] pb-0">
           <Carousel
             className="w-full h-full"
             opts={{ align: "start", loop: true }}
@@ -105,10 +107,12 @@ export default function HomePage() {
         </section>
       )}
 
+      {/* */}
       {/* Fique Ligado */}
+      {/* */}
       {fiqueLigado?.length ? (
         <section className="w-full bg-[#FFEB00] py-6">
-          <div className="max-w-[1200px] mx-auto px-2 flex items-center gap-4">
+          <div className="max-w-[1200px] mx-auto px-2 flex flex-col md:flex-row items-center gap-4">
             <HiLightBulb className="text-[50px]" />
             <h2 className="shrink-0 text-[28px] leading-none font-extrabold text-[#0B2A4A]">
               Fique
@@ -116,7 +120,7 @@ export default function HomePage() {
             </h2>
 
             <nav className="flex-1">
-              <ul className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
+              <ul className="flex flex-wrap items-center justify-center md:justify-between gap-x-8 gap-y-1 md:gap-y-3">
                 {fiqueLigado.map(({ nome, link }, idx) => (
                   <li
                     key={`${idx}-${link}`}
@@ -138,7 +142,10 @@ export default function HomePage() {
           </div>
         </section>
       ) : null}
+
+      {/* */}
       {/* Ensino CNSD */}
+      {/* */}
       <section className="px-10">
         <div className="flex flex-row justify-center items-center pt-20 gap-4">
           <LuPencilRuler className="text-[#0B2A4A] text-[50px]" />
@@ -152,7 +159,7 @@ export default function HomePage() {
         ) : null}
 
         <div className="mx-auto px-4 mt-8">
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-10">
             {ensino.map(({ nome, imagem, link }, idx) => {
               const href =
                 link && /^https?:\/\//i.test(link)
@@ -200,7 +207,7 @@ export default function HomePage() {
           </ul>
         </div>
 
-        <div className="flex justify-center gap-20 my-10">
+        <div className="flex flex-col md:flex-row justify-center gap-20 my-10">
           <div className="flex flex-col gap-3">
             <img src={metodo1} className="h-20 w-auto" />
             <p className="font-semibold">Método de ensino Montessori</p>
@@ -214,6 +221,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* */}
+      {/* Diferenciais */}
+      {/* */}
       <section
         className="w-full py-12"
         style={{
@@ -227,7 +238,7 @@ export default function HomePage() {
             Diferenciais
           </h2>
 
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10">
             {diferenciais.map(({ nome, foto, link }, idx) => {
               const href =
                 link && /^https?:\/\//i.test(link)
@@ -276,7 +287,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* */}
       {/* --- DEPOIMENTOS --- */}
+      {/* */}
       <section className="w-full bg-white py-14">
         <div className="max-w-[1200px] mx-auto px-4">
           <h2 className="text-center text-[28px] font-bold text-[#0B2A4A] mb-10">
