@@ -73,19 +73,19 @@ export const Header = () => {
       submenu: [
         {
           name: "Nossa História",
-          href: "/nossa-historia",
+          href: "/o-colegio/nossa-historia",
         },
         {
           name: "Nossa Missão",
-          href: "/nossa-missao",
+          href: "/o-colegio/nossa-missao",
         },
         {
           name: "Secretaria Acadêmica",
-          href: "/secretaria-cademica",
+          href: "/o-colegio/secretaria-academica",
         },
         {
           name: "Estrutura Física",
-          href: "/estrutura-fisica",
+          href: "/o-colegio/nossa-estrutura",
         },
         {
           name: "Trabalhe Conosco",
@@ -99,11 +99,11 @@ export const Header = () => {
       submenu: [
         {
           name: "Proposta Pedagógica",
-          href: "/proposta-pedagogica",
+          href: "/ensino/proposta-pedagogica",
           submenu: [
             {
               name: "Formação Continua",
-              href: "/formacao-continua"
+              href: "/ensino/proposta-pedagogica/formacao-continua"
             }
           ]
         },
@@ -113,31 +113,31 @@ export const Header = () => {
           submenu: [
             {
               name: "Base Teórica-Pedagógica",
-              href: "/base-teorica-pedagogicaeducacao-infantil"
+              href: "/ensino/educacao-infantil/base-teorica-pedagogica"
             }
           ]
         },
         {
-          name: "Ensino Fundalmental Anos Iniciais",
+          name: "Ensino Fundamental Anos Iniciais",
           href: "/#",
           submenu: [
             {
               name: "Base Teórica-Pedagógica",
-              href: "/base-teorica-pedagogicaanos-iniciais"
+              href: "/ensino/ensino-fundamental-anos-iniciais/base-teorica-pedagogica"
             }
           ]
         },
         {
-          name: "Ensino Fundalmental Anos Finais",
+          name: "Ensino Fundamental Anos Finais",
           href: "/#",
           submenu: [
             {
               name: "Base Teórica-Pedagógica",
-              href: "/base-teorica-pedagogicaanos-finais"
+              href: "/ensino/ensino-fundamental-anos-finais/base-teorica-pedagogica"
             },
             {
               name: "Desafios e Simulados",
-              href: "/desafios-e-simulados"
+              href: "/ensino/ensino-fundamental-anos-finais/desafios-e-simulados"
             },
           ]
         },
@@ -147,23 +147,23 @@ export const Header = () => {
           submenu: [
             {
               name: "Base Teórica-Pedagógica",
-              href: "/base-teorica-pedagogica"
+              href: "/ensino/ensino-medio/base-teorica-pedagogica"
             },
             {
               name: "Simulados",
-              href: "/simulados"
+              href: "/ensino/ensino-medio/simulados"
             },
             {
               name: "Formandos",
-              href: "/formandos"
+              href: "/ensino/ensino-medio/formandos"
             },
             {
               name: "Aprovados no Vestibular",
-              href: "/aprovados-no-vestibular"
+              href: "/ensino/ensino-medio/aprovados-no-vestibular"
             },
             {
               name: "Pré-Vestibular",
-              href: "/pre-vestibular"
+              href: "/ensino/ensino-medio/pre-vestibular"
             },
           ]
         },
@@ -173,15 +173,15 @@ export const Header = () => {
           submenu: [
             {
               name: "Base Teórica-Pedagógica",
-              href: "/base-teorica-pedagogica-tecnico"
+              href: "/ensino/ensino-tecnico/base-teorica-pedagogica"
             },
             {
               name: "Formação Continua",
-              href: "/formacao-continua"
+              href: "/ensino/ensino-tecnico/formacao-continua"
             },
             {
               name: "Administração",
-              href: "/administracao"
+              href: "/ensino/ensino-tecnico/administracao"
             },
           ]
         },
@@ -193,48 +193,48 @@ export const Header = () => {
       submenu: [
         {
           name: "Esporte",
-          href: "/esporte",
+          href: "/#",
           submenu: [
             {
               name: "Escola de Esportes",
-              href: "/escola-de-esportes",
+              href: "/atividades/esporte/escola-de-esportes",
             },
             {
               name: "Olimpíada",
-              href: "/olimpiada",
+              href: "/atividades/esporte/olimpiada",
             },
           ]
         },
         {
           name: "Pastoral",
-          href: "/pastoral"
+          href: "/atividades/Pastoral"
         },
         {
           name: "Biblioteca",
-          href: "/biblioteca"
+          href: "/atividades/biblioteca"
         },
         {
           name: "Contraturno",
-          href: "/contraturno",
+          href: "/#",
           submenu: [
             {
               name: "Período de Permanência Integral",
-              href: "/periodo-de-permanencia-integral/"
+              href: "/atividades/contraturno/periodo-de-permanencia-integral"
             }, {
               name: "Flauta",
-              href: "/flauta"
+              href: "/atividades/contraturno/flauta"
             }, {
               name: "Apoio Pedagógico Fundamental Anos Iniciais",
-              href: "/apa-efai"
+              href: "/atividades/contraturno/apa-efai"
             }, {
               name: "Plantão de Apoio Pedagógico - Fundamental Anos Finais",
-              href: "/plantao-de-estudo-efaf"
+              href: "/atividades/contraturno/plantao-de-estudo-efaf"
             }, {
               name: "Plantão de Apoio Pedagógico - Ensino Médio",
-              href: "/plantao-de-estudo-em"
+              href: "/atividades/contraturno/plantao-de-estudo-em"
             }, {
               name: "Treinamentos",
-              href: "/treinamentos"
+              href: "/atividades/contraturno/treinamentos"
             },
           ]
         },
@@ -246,17 +246,17 @@ export const Header = () => {
       submenu: [
         {
           name: "Linha do Tempo",
-          href: "/linha-do-tempo"
+          href: "/responsabilidade-social/linha-do-tempo"
         },
         {
           name: "Ensino Técnico",
-          href: "/ensino-tecnico"
+          href: "/responsabilidade-social/ensino-tecnico"
         }, {
           name: "Processo Seletivo",
-          href: "/processo-seletivo"
+          href: "/responsabilidade-social/processo-seletivo"
         }, {
           name: "Parceiros",
-          href: "/parceiros"
+          href: "/responsabilidade-social/parceiros"
         },
       ]
     },

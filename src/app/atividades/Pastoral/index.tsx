@@ -95,9 +95,6 @@ export default function Pastoral() {
             {/* Galeria de Fotos */}
             {galeria_de_foto && galeria_de_foto.length > 0 && (
               <div className="flex flex-col gap-4">
-                <h2 className="text-2xl font-bold text-primary">
-                  Galeria
-                </h2>
                 <CarrosselGaleria
                   fotos={galeria_de_foto}
                   title="Pastoral"

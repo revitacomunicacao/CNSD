@@ -22,7 +22,7 @@ export default function Biblioteca() {
     const match = url.match(regExp)
     return (match && match[2].length === 11) ? match[2] : null
   }
-
+  
   const CarrosselGaleria = ({ fotos, title }: { fotos: any[], title: string }) => (
     <div className="px-12">
       <Carousel
@@ -128,9 +128,6 @@ export default function Biblioteca() {
               {/* Vídeo do YouTube */}
               {videoId && (
                 <div className="flex flex-col gap-4">
-                  <h2 className="text-2xl font-bold text-primary text-center">
-                    Conheça Nossa Biblioteca
-                  </h2>
                   <div className="flex justify-center">
                     <div className="w-full max-w-4xl">
                       <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>

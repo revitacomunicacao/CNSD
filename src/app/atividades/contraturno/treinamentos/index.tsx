@@ -9,64 +9,53 @@ export default function Treinamentos() {
   if (!treinamentos?.length) return null
 
   return (
-    <main>
-      {treinamentos.map(({ id, titulo, conteudo, dias }) => (
-        <main key={id} className="flex justify-center items-center my-12 md:my-20">
-          <section className="w-full max-w-[1200px] flex flex-col gap-10 md:gap-10 px-4">
-            
-            {/* Título */}
-            <h1 className="text-primary text-[28px] md:text-[32px] font-bold">
-              {titulo}
-            </h1>
+    <main className="flex justify-center items-center my-12 md:my-20">
+      <section className="w-full max-w-[1200px] flex flex-col gap-10 px-4">
 
-            {/* Conteúdo */}
-            <div className="content-html text-lg text-gray-700 leading-relaxed" 
-                 dangerouslySetInnerHTML={{ __html: conteudo }} 
-            />
+        {/* Título principal */}
+        {treinamentos[0]?.titulo && (
+          <h1 className="text-primary text-[28px] md:text-[32px] font-bold text-center">
+            {treinamentos[0].titulo}
+          </h1>
+        )}
 
-            {/* Dias de Treinamento */}
-            {dias && dias.length > 0 && (
-              <div className="flex flex-col gap-6">
-                <h2 className="text-2xl font-bold text-primary">
-                  Horários dos Treinamentos
-                </h2>
-                
-                {/* Grid de 2 colunas */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {dias.map((dia, index) => (
-                    <div key={index} className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
-                      
-                      {/* Cabeçalho do Card */}
-                      <div className="mb-4 pb-4 border-b border-gray-100">
-                        <h3 className="text-xl font-bold text-primary mb-2">
-                          {dia.dia_da_semana}
-                        </h3>
-                        <p className="text-gray-600 font-medium">
-                          {dia.turma}
-                        </p>
-                      </div>
+        {/* Conteúdo */}
+        {treinamentos[0]?.conteudo && (
+          <div
+            className="content-html text-lg text-gray-700 leading-relaxed mx-auto"
+            dangerouslySetInnerHTML={{ __html: treinamentos[0].conteudo }}
+          />
+        )}
 
-                      {/* Lista de Horários e Atividades */}
-                      <div className="space-y-3">
-                        {dia.horario_e_atividade.map((item, itemIndex) => (
-                          <div key={itemIndex} className="bg-gray-50 rounded-lg p-3 hover:bg-gray-100 transition-colors duration-200">
-                            <span className="text-sm">
-                              <span className="font-semibold text-primary">{item.horario}</span>
-                              <span className="text-gray-500 mx-2">-</span>
-                              <span className="text-gray-700">{item.atividade}</span>
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+        {/* Cards de dias */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {treinamentos[0]?.dias?.map((dia, index) => (
+            <div
+              key={index}
+              className="bg-[#37383a] text-white rounded-lg shadow-lg overflow-hidden"
+            >
+              {/* Cabeçalho */}
+              <div className="py-4 text-center">
+                <h3 className="text-[20px] font-bold text-[#00AEEF]">{dia.dia_da_semana}</h3>
+                <p className="text-sm text-gray-300 mt-1">{dia.turma}</p>
               </div>
-            )}
 
-          </section>
-        </main>
-      ))}
+              {/* Lista */}
+              <div className="p-6 space-y-2">
+                {dia.horario_e_atividade.map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-center pb-2 text-gray-200 text-sm"
+                  >
+                    <span>{`${item.horario}ﾠ`}</span> -  
+                    <span className="font-medium">{`ﾠ${item.atividade}`}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   )
 }

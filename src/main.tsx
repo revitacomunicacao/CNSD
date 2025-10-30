@@ -4,6 +4,7 @@ import routes from 'virtual:generated-pages-react'
 import './index.css'
 import { Header } from './layout/Header'
 import { Footer } from './layout/Footer'
+import { Breadcrumbs } from './components/Breadcrumbs'
 
 function App() {
   return useRoutes(routes)
@@ -12,6 +13,7 @@ function App() {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Header />
+    <Breadcrumbs />
     <App />
     <Footer />
   </BrowserRouter>

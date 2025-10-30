@@ -21,7 +21,7 @@ function PainelBloco({ titulo, descricao }: Bloco) {
 
       {/* Descrição (pode vir com <strong> etc.) */}
       <div
-        className="content-html mt-4 text-center leading-relaxed text-sm md:text-[15px] space-y-3"
+        className="mt-4 text-center leading-relaxed text-sm md:text-[15px] space-y-3 text-white [&_*]:text-white"
         dangerouslySetInnerHTML={{ __html: descricao }}
       />
     </div>

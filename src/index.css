@@ -119,13 +119,36 @@
   }
 }
 
+/* Remove espaço superior do primeiro bloco de conteúdo após o breadcrumb */
+.breadcrumbs-container + main,
+.breadcrumbs-container + main main,
+.breadcrumbs-container + div main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Pequeno espaço superior/inferior no primeiro título após o breadcrumb */
+.breadcrumbs-container + main h1:first-child,
+.breadcrumbs-container + main section > h1:first-child,
+.breadcrumbs-container + div main h1:first-child,
+.breadcrumbs-container + div main section > h1:first-child {
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 42px !important;
+  line-height: 1.2;
+  font-weight: 600 !important; /* um pouco mais fino que bold */
+  color: var(--primary);
+  text-align: left !important;
+}
+
 /* Estilos para conteúdo HTML da API */
 .content-html p {
   @apply mb-4 text-base leading-relaxed text-gray-700;
 }
 
 .content-html h1 {
-  @apply text-3xl font-bold mb-4 mt-6 text-primary;
+  @apply text-3xl font-semibold mb-3 mt-3 text-primary;
+  text-align: left;
 }
 
 .content-html h2 {

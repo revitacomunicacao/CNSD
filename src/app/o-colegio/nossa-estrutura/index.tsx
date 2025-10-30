@@ -47,7 +47,7 @@ export default function NossaEstrutura() {
                       className="w-full flex items-center justify-between px-6 py-4 bg-gray-50 hover:bg-gray-100 transition-colors duration-200"
                     >
                       <h3 className="text-lg font-semibold text-gray-800 text-left">
-                        {galeria.titulo}
+                        {(galeria.titulo).toUpperCase()}
                       </h3>
                       <svg
                         className={`w-6 h-6 text-primary transition-transform duration-200 ${

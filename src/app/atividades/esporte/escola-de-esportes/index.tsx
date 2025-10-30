@@ -111,9 +111,6 @@ export default function EscolaDeEsportes() {
             {/* 3. Galeria 1 (Estrutura) */}
             {galeria_de_foto_1 && galeria_de_foto_1.length > 0 && (
               <div className="flex flex-col gap-4">
-                <h2 className="text-2xl font-bold text-primary">
-                  Estrutura
-                </h2>
                 <CarrosselGaleria
                   fotos={galeria_de_foto_1}
                   title="Estrutura"
@@ -136,9 +133,7 @@ export default function EscolaDeEsportes() {
             {/* 5. Galeria 2 (Modalidades) */}
             {galeria_de_foto_2 && galeria_de_foto_2.length > 0 && (
               <div className="flex flex-col gap-4">
-                <h2 className="text-2xl font-bold text-primary">
-                  Fotos das Modalidades
-                </h2>
+
                 <CarrosselGaleria
                   fotos={galeria_de_foto_2}
                   title="Modalidades"
@@ -170,9 +165,6 @@ export default function EscolaDeEsportes() {
                     
                     return videoId ? (
                       <div key={index} className="flex flex-col gap-3">
-                        <h3 className="text-lg font-semibold text-center">
-                          {video.titulo}
-                        </h3>
                         <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                           <iframe
                             className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
