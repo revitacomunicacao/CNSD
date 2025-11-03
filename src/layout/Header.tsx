@@ -266,14 +266,14 @@ export const Header = () => {
       submenu: [
         {
           name: "Revista/Informativo",
-          href: "/revista-informatica"
+          href: "/publicacoes/revista-informatica"
         },
         {
           name: "Na Mídia",
-          href: "/na-midia"
+          href: "/publicacoes/na-midia"
         }, {
           name: "Notícias",
-          href: "/noticias"
+          href: "/publicacoes/noticias"
         },
       ]
     },
