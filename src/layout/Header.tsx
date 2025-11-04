@@ -266,7 +266,7 @@ export const Header = () => {
       submenu: [
         {
           name: "Revista/Informativo",
-          href: "/publicacoes/revista-informatica"
+          href: "/publicacoes/revista-informativo"
         },
         {
           name: "Na Mídia",

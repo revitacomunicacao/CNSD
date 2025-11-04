@@ -14,6 +14,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import fundodepoimento from "@/assets/fundo-depoimento.jpg";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   useSeo({
@@ -24,6 +25,7 @@ export default function HomePage() {
   });
 
   const { data: home, loading, error } = useContent<IHome>("/home");
+  const { data: destaques, loading: loadingDestaques } = useContent<any>("blog/ultimos-por-categoria");
 
   if (loading) return "carregando";
   if (error) return "erro ao carregar conteúdo";
@@ -36,6 +38,19 @@ export default function HomePage() {
   const ensino = root?.ensino ?? [];
   const diferenciais = root?.diferenciais ?? [];
   const depoimentos = root?.depoimentos ?? [];
+
+  // Função para formatar data e hora
+  const formatarDataHora = (dataString: string) => {
+    if (!dataString) return "";
+    const data = new Date(dataString);
+    return data.toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
 
   // normaliza link do banner (se vier sem protocolo)
   const href =
@@ -364,6 +379,61 @@ export default function HomePage() {
           </Carousel>
         </div>
       </section>
+
+      {/* */}
+      {/* DESTAQUES */}
+      {/* */}
+      {destaques && destaques.length > 0 && (
+        <section className="w-full bg-white py-14">
+          <div className="max-w-[1200px] mx-auto px-4">
+            <h2 className="text-center text-[28px] font-bold text-[#0B2A4A] mb-10">
+              Destaques
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {destaques.map((item: any) => {
+                const foto = item.post?.featured?.url || "";
+                const dataPublicacao = item.post?.datetime || item.post?.date || "";
+                const categoriaNome = item.category?.name || "Sem categoria";
+                const slug = item.post?.slug || "";
+                const titulo = item.post?.title || "";
+
+                return (
+                  <Link
+                    key={item.post?.id || Math.random()}
+                    to={`/publicacoes/noticias/${slug}`}
+                    className="block"
+                  >
+                    <div
+                      className="relative w-full h-[300px] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group"
+                      style={{
+                        backgroundImage: `url(${foto})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    >
+                      {/* Overlay escuro no canto inferior */}
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-4 min-h-[130px] flex justify-between flex-col">
+                        <div className="flex flex-col justify-center gap-1">
+                          <p className="text-white text-xs mb-1 opacity-90">
+                            {dataPublicacao || ""}
+                          </p>
+                          <p className="text-white font-bold text-sm mb-2 line-clamp-2">
+                            {titulo}
+                          </p>
+                        </div>
+                        <p className="text-white font-semibold text-sm">
+                          {categoriaNome}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
