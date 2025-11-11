@@ -1,6 +1,9 @@
 import { useMemo, useRef, useState } from "react"
 import { axiosClient } from "@/api/axiosClient"
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 MB
+const ACCEPTED_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
+
 interface FormValues {
   nome: string
   email: string
@@ -41,7 +44,7 @@ const tipoCurriculoOptions = [
   {
     value: "operacional",
     label:
-      "Operacional — Adequado para cargos operacionais, tais como: Administrativo, Financeiro, Recepção, Disciplinários e Serviços Gerais",
+      "Operacional — Adequado para cargos operacionais, tais como: Administrativo, Financeiro, Recepção, Disciplinares e Serviços Gerais",
   },
   {
     value: "pcd",
@@ -68,7 +71,8 @@ export default function TrabalheConosco() {
       values.email.trim() &&
       values.tipoCurriculo.trim() &&
       values.resumo.trim() &&
-      values.mensagem.trim()
+      values.mensagem.trim() &&
+      values.curriculo instanceof File
     )
   }, [values])
 
@@ -82,8 +86,20 @@ export default function TrabalheConosco() {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null
+    let error: string | undefined
+
+    if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        error = "O arquivo deve ter no máximo 5 MB."
+      } else if (!ACCEPTED_TYPES.includes(file.type)) {
+        error = "Tipos permitidos: PDF, DOC ou DOCX."
+      }
+    } else {
+      error = "Anexe seu currículo."
+    }
+
     setValues((prev) => ({ ...prev, curriculo: file }))
-    setErrors((prev) => ({ ...prev, curriculo: undefined, geral: undefined }))
+    setErrors((prev) => ({ ...prev, curriculo: error, geral: undefined }))
   }
 
   const validate = () => {
@@ -95,8 +111,14 @@ export default function TrabalheConosco() {
     if (!values.resumo.trim()) nextErrors.resumo = "Descreva seu resumo profissional."
     if (!values.mensagem.trim()) nextErrors.mensagem = "Escreva uma mensagem."
 
-    if (values.curriculo && values.curriculo.size > 10 * 1024 * 1024) {
-      nextErrors.curriculo = "O arquivo deve ter no máximo 10MB."
+    if (!(values.curriculo instanceof File)) {
+      nextErrors.curriculo = "Anexe seu currículo em PDF, DOC ou DOCX (máx. 5 MB)."
+    } else {
+      if (values.curriculo.size > MAX_FILE_SIZE) {
+        nextErrors.curriculo = "O arquivo deve ter no máximo 5 MB."
+      } else if (!ACCEPTED_TYPES.includes(values.curriculo.type)) {
+        nextErrors.curriculo = "Tipos permitidos: PDF, DOC ou DOCX."
+      }
     }
 
     setErrors(nextErrors)
@@ -115,7 +137,7 @@ export default function TrabalheConosco() {
       const mainMessage = typeof rawMessage.message === "string" ? rawMessage.message : ""
       const fields = Array.isArray(rawMessage.fields) ? rawMessage.fields : []
       if (mainMessage || fields.length) {
-        const fieldsMsg = fields.length ? ` Campos: ${fields.join(", ")}.` : ""
+        const fieldsMsg = fields.length ? ` Campos: ${Object.keys(fields).join(", ")}.` : ""
         return `${mainMessage}${fieldsMsg}`.trim() || defaultMessage
       }
       try {
@@ -168,6 +190,7 @@ export default function TrabalheConosco() {
     formData.append("tipo_curriculo", values.tipoCurriculo.trim())
     formData.append("resumo_profissional", values.resumo.trim())
     formData.append("mensagem", values.mensagem.trim())
+    formData.append("_hp", values.honeypot.trim())
 
     if (values.facebook.trim()) formData.append("facebook", values.facebook.trim())
     if (values.linkedin.trim()) formData.append("linkedin", values.linkedin.trim())
@@ -177,7 +200,11 @@ export default function TrabalheConosco() {
     setFeedback(null)
 
     try {
-      const { data } = await axiosClient.post("form/trabalhe-conosco", formData)
+      const { data } = await axiosClient.post("trabalhe-conosco", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       setFeedback({
         type: "success",
         message: data?.message || "Formulário enviado com sucesso.",
@@ -338,16 +365,17 @@ export default function TrabalheConosco() {
 
               <div className="md:col-span-2 flex flex-col gap-2">
                 <label htmlFor="curriculo" className="text-sm font-medium text-gray-700">
-                  Anexar currículo (opcional)
+                  Anexar currículo <span className="text-red-600">(Obrigatório — PDF, DOC ou DOCX até 5 MB)</span>
                 </label>
                 <input
                   id="curriculo"
                   name="curriculo"
                   type="file"
-                  accept=".pdf,.doc,.docx,.odt"
+                  accept=".pdf,.doc,.docx"
                   className={`border rounded-md px-3 py-2 ${errors.curriculo ? "border-red-400" : ""}`}
                   onChange={handleFileChange}
                   ref={fileInputRef}
+                  required
                 />
                 {errors.curriculo && <span className="text-xs text-red-600">{errors.curriculo}</span>}
               </div>
@@ -365,6 +393,7 @@ export default function TrabalheConosco() {
                 type="button"
                 className="border border-gray-300 px-6 py-2 rounded-md"
                 onClick={resetForm}
+                disabled={submitting}
               >
                 Limpar
               </button>

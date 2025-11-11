@@ -132,6 +132,10 @@ export const Header = () => {
           href: "/o-colegio/nossa-estrutura",
         },
         {
+          name: "Galeria das Diretoras",
+          href: "/o-colegio/galeria-das-diretoras",
+        },
+        {
           name: "Trabalhe Conosco",
           href: "https://veritascnsd.tk/veritas_educacional/trabalhe_conosco",
         },
