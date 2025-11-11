@@ -6,6 +6,15 @@ export interface IPrograma {
   link: string;
 }
 
+export interface IPagination {
+  page: number
+  per_page: number
+  total: number
+  total_pages: number
+  has_prev: boolean
+  has_next: boolean
+}
+
 export interface ITvCnsd {
   page: {
     id: number;
@@ -15,5 +24,6 @@ export interface ITvCnsd {
     conteudo: string;
   };
   programas: IPrograma[];
+  pagination?: IPagination;
 }
 

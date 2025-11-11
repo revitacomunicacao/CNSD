@@ -1,5 +1,15 @@
+import { useState, useMemo } from "react"
 import { useContent } from "@/hooks/useContent"
-import { ITvCnsd } from "./types/ITvCnsd"
+import { ITvCnsd, IPagination } from "./types/ITvCnsd"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination"
 
 // Função para extrair o ID do vídeo do YouTube
 const getYouTubeVideoId = (url: string) => {
@@ -9,8 +19,46 @@ const getYouTubeVideoId = (url: string) => {
   return (match && match[2].length === 11) ? match[2] : null
 }
 
+const createPaginationRange = (current: number, total: number, delta = 1): Array<number | "ellipsis"> => {
+  if (total <= 1) return [1]
+
+  const range: number[] = []
+  const rangeWithDots: Array<number | "ellipsis"> = []
+  let previous: number | null = null
+
+  for (let page = 1; page <= total; page++) {
+    if (page === 1 || page === total || (page >= current - delta && page <= current + delta)) {
+      range.push(page)
+    }
+  }
+
+  range.sort((a, b) => a - b).forEach((page) => {
+    if (previous !== null) {
+      if (page - previous === 2) {
+        rangeWithDots.push(previous + 1)
+      } else if (page - previous > 2) {
+        rangeWithDots.push("ellipsis")
+      }
+    }
+    rangeWithDots.push(page)
+    previous = page
+  })
+
+  return rangeWithDots
+}
+
 export default function TvCNSD() {
-  const { data: tvCnsd, loading, error } = useContent<ITvCnsd>("publicacoes/tv-cnsd")
+  const [currentPage, setCurrentPage] = useState(1)
+  const endpoint = useMemo(() => `publicacoes/tv-cnsd?page=${currentPage}`, [currentPage])
+  const { data: tvCnsd, loading, error } = useContent<ITvCnsd>(endpoint)
+
+  const handleChangePage = (page: number) => {
+    if (page === currentPage || page < 1) return
+    setCurrentPage(page)
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+  }
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>
   if (error) return <div className="py-20 text-center text-red-600">Erro ao carregar.</div>
@@ -18,10 +66,13 @@ export default function TvCNSD() {
 
   return (
     <main>
-      {tvCnsd.map(({ page, programas }) => {
+      {tvCnsd.map(({ page, programas, pagination }) => {
         // O último programa (primeiro do array) vai ser o destaque
         const ultimoPrograma = programas && programas.length > 0 ? programas[0] : null
         const outrosProgramas = programas && programas.length > 1 ? programas.slice(1) : []
+        const paginationInfo: IPagination | undefined = pagination
+        const totalPages = paginationInfo?.total_pages ?? 1
+        const paginationRange = paginationInfo ? createPaginationRange(paginationInfo.page, totalPages) : []
 
         return (
           <main key={page.id} className="flex justify-center items-start my-12 md:my-20">
@@ -106,6 +157,57 @@ export default function TvCNSD() {
                     )
                   })}
                 </div>
+              )}
+
+              {paginationInfo && paginationInfo.total_pages > 1 && (
+                <Pagination className="pt-6">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        href="#"
+                        className={!paginationInfo.has_prev ? "pointer-events-none opacity-50" : ""}
+                        onClick={(event) => {
+                          event.preventDefault()
+                          if (paginationInfo.has_prev) {
+                            handleChangePage(paginationInfo.page - 1)
+                          }
+                        }}
+                      />
+                    </PaginationItem>
+
+                    {paginationRange.map((item, index) => (
+                      <PaginationItem key={`${item}-${index}`}>
+                        {item === "ellipsis" ? (
+                          <PaginationEllipsis />
+                        ) : (
+                          <PaginationLink
+                            href="#"
+                            isActive={item === currentPage}
+                            onClick={(event) => {
+                              event.preventDefault()
+                              handleChangePage(item)
+                            }}
+                          >
+                            {item}
+                          </PaginationLink>
+                        )}
+                      </PaginationItem>
+                    ))}
+
+                    <PaginationItem>
+                      <PaginationNext
+                        href="#"
+                        className={!paginationInfo.has_next ? "pointer-events-none opacity-50" : ""}
+                        onClick={(event) => {
+                          event.preventDefault()
+                          if (paginationInfo.has_next) {
+                            handleChangePage(paginationInfo.page + 1)
+                          }
+                        }}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
               )}
             </section>
           </main>

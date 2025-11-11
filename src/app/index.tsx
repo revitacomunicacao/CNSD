@@ -16,6 +16,14 @@ import {
 import fundodepoimento from "@/assets/fundo-depoimento.jpg";
 import { Link } from "react-router-dom";
 
+interface IGaleriaDeFotos {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featured_image: string;
+}
+
 export default function HomePage() {
   useSeo({
     title: "Home",
@@ -26,6 +34,8 @@ export default function HomePage() {
 
   const { data: home, loading, error } = useContent<IHome>("/home");
   const { data: destaques, loading: loadingDestaques } = useContent<any>("blog/ultimos-por-categoria");
+  const { data: galeriaDeFotos, loading: loadingGaleria } = useContent<IGaleriaDeFotos>("fotos")
+  console.log(galeriaDeFotos)
 
   if (loading) return "carregando";
   if (error) return "erro ao carregar conteúdo";
@@ -127,7 +137,7 @@ export default function HomePage() {
       {/* */}
       {fiqueLigado?.length ? (
         <section className="w-full bg-[#FFEB00] py-6">
-          <div className="max-w-[1200px] mx-auto px-2 flex flex-col md:flex-row items-center gap-4">
+          <div className="max-w-full mx-auto px-2 flex flex-col md:flex-row items-center gap-4">
             <HiLightBulb className="text-[50px]" />
             <h2 className="shrink-0 text-[28px] leading-none font-extrabold text-[#0B2A4A]">
               Fique
@@ -434,6 +444,24 @@ export default function HomePage() {
           </div>
         </section>
       )}
+      <section className="flex flex-col justify-center items-center my-20">
+        <h2 className="text-center text-[28px] font-bold text-[#0B2A4A] mb-10">
+          Fotos
+        </h2>
+        {galeriaDeFotos.map(({ 
+          excerpt,
+          featured_image,
+          id,
+          slug,
+          title,
+        }) => (
+          <a href={`/publicacoes/noticias/${slug}`} key={id} className="w-[400px] text-center">
+            <img src={featured_image} />
+            <h2>{title}</h2>
+            <div className="text-black" dangerouslySetInnerHTML={{ __html:excerpt }} />
+          </a>
+        ))}
+      </section>
     </main>
   );
 }

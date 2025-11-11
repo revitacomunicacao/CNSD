@@ -1,24 +1,91 @@
 import { useState } from "react"
+import { axiosClient } from "@/api/axiosClient"
+
+type FeedbackState = {
+  type: "success" | "error"
+  message: string
+} | null
 
 export default function Egresso() {
   const [submitting, setSubmitting] = useState(false)
+  const [feedback, setFeedback] = useState<FeedbackState>(null)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const data: Record<string, FormDataEntryValue> = {}
-    formData.forEach((value, key) => {
-      data[key] = value
-    })
-    setSubmitting(true)
-    try {
-      console.log("Egresso form:", data)
-      // TODO: enviar para API quando disponível
-      alert("Formulário enviado!")
-      e.currentTarget.reset()
-    } finally {
-      setSubmitting(false)
+    const form = e.currentTarget
+    const formData = new FormData(form)
+
+    // Honeypot anti-spam
+    if (String(formData.get("_hp") || "").trim()) {
+      return
     }
+
+    const getValue = (key: string) => String(formData.get(key) || "").trim()
+
+    const logradouro = getValue("logradouro")
+    const numero = getValue("numero")
+    const complemento = getValue("complemento")
+
+    const enderecoBase = [logradouro, numero].filter(Boolean).join(", ")
+    const endereco = [enderecoBase, complemento].filter(Boolean).join(" - ")
+
+    const amigoNome = getValue("amigoNome")
+    const amigoTelefone = getValue("amigoTelefone")
+    const amigoEmail = getValue("amigoEmail")
+    const temAmigo = amigoNome || amigoTelefone || amigoEmail ? "sim" : "não"
+
+    const payload = {
+      nome_completo: getValue("nomeCompleto"),
+      data_nascimento: getValue("dataNascimento"),
+      telefone: getValue("telefone"),
+      celular: getValue("celular"),
+      facebook: getValue("facebook"),
+      instagram: getValue("instagram"),
+      email: getValue("email"),
+      endereco,
+      cep: getValue("cep"),
+      logradouro,
+      numero,
+      complemento,
+      bairro: getValue("bairro"),
+      cidade: getValue("cidade"),
+      estado: getValue("estado"),
+      pais: getValue("pais"),
+      profissao: getValue("profissao"),
+      onde_trabalha: getValue("trabalhoAtual"),
+      periodo_cnsd: getValue("periodoCNSD"),
+      funcionarios_marcantes: getValue("citacaoFuncionarios"),
+      historia_marcante: getValue("historia"),
+      tem_amigo: temAmigo,
+      amigo_nome: amigoNome,
+      amigo_telefone: amigoTelefone,
+      amigo_email: amigoEmail,
+      _hp: "",
+    }
+
+    setSubmitting(true)
+    setFeedback(null)
+
+    axiosClient
+      .post("form/cnsd-egresso", payload)
+      .then(({ data }) => {
+        setFeedback({
+          type: "success",
+          message: data?.message || "Formulário enviado com sucesso.",
+        })
+        form.reset()
+      })
+      .catch((error) => {
+        let message = "Não foi possível enviar o formulário. Verifique os dados e tente novamente."
+        if (error?.response?.data?.message) {
+          message = error.response.data.message
+        }
+        setFeedback({ type: "error", message })
+        console.error("Erro ao enviar formulário de egresso:", error)
+      })
+      .finally(() => {
+        setSubmitting(false)
+      })
   }
 
   return (
@@ -33,6 +100,16 @@ export default function Egresso() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-10">
+            <input type="text" name="_hp" className="hidden" autoComplete="off" />
+
+            {feedback?.type === "error" && (
+              <div
+                className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+              >
+                {feedback.message}
+              </div>
+            )}
+
             {/* Informações Pessoais */}
             <div className="space-y-6">
               <h2 className="text-2xl font-semibold text-primary mb-10">Informações pessoais</h2>
@@ -63,7 +140,7 @@ export default function Egresso() {
                 </div>
                 <div className="md:col-span-2 flex flex-col gap-2">
                   <label htmlFor="email" className="text-sm font-medium text-gray-700">E-mail</label>
-                  <input id="email" name="email" type="email" className="border rounded-md px-3 py-2" />
+                  <input id="email" name="email" type="email" className="border rounded-md px-3 py-2" required />
                 </div>
               </div>
             </div>
@@ -154,6 +231,12 @@ export default function Egresso() {
               <button type="reset" className="border border-gray-300 px-6 py-2 rounded-md">Limpar</button>
             </div>
           </form>
+
+          {feedback?.type === "success" && (
+            <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+              {feedback.message}
+            </div>
+          )}
         </section>
       </main>
     </main>

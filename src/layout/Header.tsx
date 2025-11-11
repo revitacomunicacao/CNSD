@@ -3,19 +3,12 @@ import logo from "@/assets/logo.png"
 import { Input } from "@/components/ui/input"
 import { Link } from "react-router-dom"
 import { ChevronDown, Search, Menu, ChevronRight, X } from "lucide-react"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 
 import { RiGraduationCapFill } from "react-icons/ri";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaUsers, FaUserShield, FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaSpotify, FaSoundcloud } from "react-icons/fa";
 import { PiTelevisionBold } from "react-icons/pi";
+import { useContent } from "@/hooks/useContent"
 
 interface SubMenuItem {
   name: string
@@ -29,11 +22,18 @@ interface MenuItem {
   submenu?: SubMenuItem[]
 }
 
+interface ILatestPost {
+  id: number
+  title?: string
+  slug: string
+  featured_image?: string | false
+}
+
 export const Header = () => {
   const [openMenu, setOpenMenu] = useState<number | null>(null)
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null)
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [egressoDialogOpen, setEgressoDialogOpen] = useState(false)
+  const [areaRestritaOpen, setAreaRestritaOpen] = useState(false)
+  const [egressoMenuOpen, setEgressoMenuOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<number | null>(null)
@@ -54,9 +54,40 @@ export const Header = () => {
     setExpandedMobileSubMenu(expandedMobileSubMenu === key ? null : key)
   }
 
+  const egressoLinks: Array<{ name: string; href: string; external?: boolean }> = [
+    {
+      name: "Faça seu cadastro",
+      href: "/egresso",
+    },
+    {
+      name: "Deixe seu depoimento",
+      href: "/depoimento-egresso/",
+    },
+  ]
+
+  const areaRestritaLinks = [
+    {
+      label: "Aluno",
+      href: "https://educacional.dominicanas.org.br/CNSD/",
+      icon: <FaUserShield className="text-lg" />,
+    },
+    {
+      label: "Pais/Responsáveis",
+      href: "https://educacional.dominicanas.org.br/CNSD/",
+      icon: <FaUsers className="text-lg" />,
+    },
+    {
+      label: "Colaboradores",
+      href: "https://educacional.dominicanas.org.br/CNSD/",
+      icon: <FaUserShield className="text-lg" />,
+    },
+  ]
+
+  const { data: latestPosts, loading: loadingLatestPosts, error: latestPostsError } = useContent<ILatestPost>("posts/ultimos")
+
   // Previne scroll quando o menu está aberto
   useEffect(() => {
-    if (mobileMenuOpen) {
+    if (mobileMenuOpen || areaRestritaOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
@@ -64,7 +95,20 @@ export const Header = () => {
     return () => {
       document.body.style.overflow = 'unset'
     }
-  }, [mobileMenuOpen])
+  }, [mobileMenuOpen, areaRestritaOpen])
+
+  useEffect(() => {
+    if (!areaRestritaOpen) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setAreaRestritaOpen(false)
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  }, [areaRestritaOpen])
   
   const menu: MenuItem[] = [
     {
@@ -397,6 +441,120 @@ export const Header = () => {
         </>
       )}
 
+      {areaRestritaOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/60 z-50"
+            onClick={() => setAreaRestritaOpen(false)}
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-10">
+            <div className="relative w-full max-w-[1200px] bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+              <button
+                className="absolute top-4 right-4 text-gray-400 hover:text-[#0b2255] transition-colors"
+                onClick={() => setAreaRestritaOpen(false)}
+                aria-label="Fechar área restrita"
+              >
+                <X size={24} />
+              </button>
+
+              <div className="px-8 pt-8 pb-6 border-b border-gray-100">
+                <h2 className="text-2xl font-bold text-[#0b2255]">Área Restrita</h2>
+                <p className="text-sm text-gray-600 mt-2">
+                  Acompanhe as últimas notícias e acesse rapidamente os portais oficiais.
+                </p>
+              </div>
+
+              <div className="px-8 pb-8 overflow-y-auto">
+                <div className="mt-6 flex flex-col lg:flex-row gap-6">
+                  <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {loadingLatestPosts &&
+                      Array.from({ length: 3 }).map((_, index) => (
+                        <div
+                          key={`skeleton-${index}`}
+                          className="flex flex-col border border-gray-200 rounded-lg overflow-hidden bg-white"
+                        >
+                          <div className="h-40 bg-gray-200 animate-pulse" />
+                          <div className="p-4 space-y-2">
+                            <div className="h-3 bg-gray-200 rounded animate-pulse" />
+                            <div className="h-3 bg-gray-200 rounded animate-pulse w-4/5" />
+                          </div>
+                        </div>
+                      ))}
+
+                    {!loadingLatestPosts && latestPostsError && (
+                      <div className="col-span-full text-sm text-red-600 border border-red-100 rounded-lg p-4 bg-red-50">
+                        Não foi possível carregar as últimas notícias. Tente novamente mais tarde.
+                      </div>
+                    )}
+
+                    {!loadingLatestPosts && !latestPostsError && latestPosts?.length
+                      ? latestPosts.slice(0, 3).map((post) => {
+                          const hasImage = post.featured_image && typeof post.featured_image === "string"
+                          return (
+                            <Link
+                              key={post.id}
+                              to={`/publicacoes/noticias/${post.slug}`}
+                              className="flex flex-col border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 bg-white"
+                              onClick={() => setAreaRestritaOpen(false)}
+                            >
+                              <div className="h-40 bg-gray-100 flex items-center justify-center overflow-hidden">
+                                {hasImage ? (
+                                  <img
+                                    src={post.featured_image as string}
+                                    alt={post.title ?? "Notícia CNSD"}
+                                    className="w-full h-full object-cover"
+                                    loading="lazy"
+                                  />
+                                ) : (
+                                  <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-[#0b2255]/5 to-[#0b2255]/10 text-[#0b2255] text-sm font-semibold px-4 text-center">
+                                    Imagem indisponível
+                                  </div>
+                                )}
+                              </div>
+                              <div className="p-4">
+                                <p className="text-sm font-semibold text-[#0b2255] leading-snug line-clamp-3">
+                                  {post.title}
+                                </p>
+                              </div>
+                            </Link>
+                          )
+                        })
+                      : null}
+                  </div>
+
+                  <div className="w-full lg:w-80 bg-gradient-to-br from-[#0b2255] to-[#1877F2] text-white rounded-2xl p-6 flex flex-col gap-6 justify-between relative overflow-hidden">
+                    <div className="space-y-2">
+                      <h3 className="text-2xl font-bold uppercase tracking-wide">Portais Oficiais</h3>
+                      <p className="text-sm text-white/90">
+                        Acesse os ambientes exclusivos para estudantes, famílias e colaboradores.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                      {areaRestritaLinks.map((item) => (
+                        <a
+                          key={item.label}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full px-4 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition-colors duration-200 font-semibold text-sm flex items-center justify-center gap-2 uppercase"
+                          onClick={() => setAreaRestritaOpen(false)}
+                        >
+                          {item.icon}
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+
+                    <p className="text-sm text-white/80">Precisa de ajuda? Entre em contato com a secretaria.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       {/* TOP BAR */}
       <div className="w-full bg-gray-50 border-b">
         <div className="max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between gap-8">
@@ -431,44 +589,49 @@ export const Header = () => {
             </form>
             
             <div className="flex gap-6">
-              <Dialog open={egressoDialogOpen} onOpenChange={setEgressoDialogOpen}>
-                <DialogTrigger asChild>
-                  <button 
-                    className="flex flex-col items-center gap-1 text-[#b3b3b3] hover:text-[#0b2255] transition-colors group"
-                  >
-                    <RiGraduationCapFill size={28} className="group-hover:scale-110 transition-transform" />
-                    <span className="text-[10px] font-medium whitespace-nowrap">EGRESSO</span>
-                  </button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-md bg-white">
-                  <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold text-[#0b2255]">Egresso</DialogTitle>
-                    <DialogDescription>
-                      Selecione uma opção
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="flex flex-col gap-3 mt-4">
-                    <a
-                      href="/cadastro-egresso/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center px-6 py-4 bg-[#0b2255] text-white font-bold rounded-lg hover:bg-[#0b2255]/90 transition-colors duration-200"
-                      onClick={() => setEgressoDialogOpen(false)}
-                    >
-                      FAÇA SEU CADASTRO
-                    </a>
-                    <a
-                      href="/depoimento-egresso/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center px-6 py-4 bg-[#0b2255] text-white font-bold rounded-lg hover:bg-[#0b2255]/90 transition-colors duration-200"
-                      onClick={() => setEgressoDialogOpen(false)}
-                    >
-                      DEIXE SEU DEPOIMENTO
-                    </a>
-                  </div>
-                </DialogContent>
-              </Dialog>
+              <div
+                className="relative"
+                onMouseEnter={() => setEgressoMenuOpen(true)}
+                onMouseLeave={() => setEgressoMenuOpen(false)}
+              >
+                <button
+                  className={`flex flex-col items-center gap-1 transition-colors group ${
+                    egressoMenuOpen ? "text-[#0b2255]" : "text-[#b3b3b3] hover:text-[#0b2255]"
+                  }`}
+                  onClick={() => setEgressoMenuOpen((prev) => !prev)}
+                >
+                  <RiGraduationCapFill size={28} className="group-hover:scale-110 transition-transform" />
+                  <span className="text-[10px] font-medium whitespace-nowrap flex items-center gap-1">
+                    EGRESSO
+                    <ChevronDown
+                      className={`w-3 h-3 transition-transform duration-200 ${egressoMenuOpen ? "rotate-180" : ""}`}
+                    />
+                  </span>
+                </button>
+
+                <div
+                  className={`absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden transition-all duration-200 z-50 ${
+                    egressoMenuOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
+                  }`}
+                >
+                  <ul className="py-2">
+                    {egressoLinks.map((link) => (
+                      <li key={link.name}>
+                        <a
+                          href={link.href}
+                          target={link.external ? "_blank" : undefined}
+                          rel={link.external ? "noopener noreferrer" : undefined}
+                          className="flex items-center justify-between px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-50 hover:text-[#0b2255] transition-colors duration-200"
+                          onClick={() => setEgressoMenuOpen(false)}
+                        >
+                          <span>{link.name}</span>
+                          {link.external && <ChevronRight className="w-4 h-4 text-gray-300" />}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
               
               <a 
                 href="http://webmail.cnsd.com.br/" 
@@ -494,53 +657,13 @@ export const Header = () => {
                 <span className="text-[10px] font-medium whitespace-nowrap">TV CNSD</span>
               </a>
               
-              <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                <DialogTrigger asChild>
-                  <button 
-                    className="flex flex-col items-center gap-1 text-[#b3b3b3] hover:text-[#0b2255] transition-colors group"
-                  >
-                    <FaUserShield size={28} className="group-hover:scale-110 transition-transform" />
-                    <span className="text-[10px] font-medium whitespace-nowrap">ÁREA RESTRITA</span>
-                  </button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-md bg-white">
-                  <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold text-[#0b2255]">Área Restrita</DialogTitle>
-                    <DialogDescription>
-                      Selecione o tipo de acesso desejado
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="flex flex-col gap-3 mt-4">
-                    <a
-                      href="https://educacional.dominicanas.org.br/CNSD/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center px-6 py-4 bg-[#0b2255] text-white font-bold rounded-lg hover:bg-[#0b2255]/90 transition-colors duration-200"
-                      onClick={() => setDialogOpen(false)}
-                    >
-                      ALUNO
-                    </a>
-                    <a
-                      href="https://educacional.dominicanas.org.br/CNSD/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center px-6 py-4 bg-[#0b2255] text-white font-bold rounded-lg hover:bg-[#0b2255]/90 transition-colors duration-200"
-                      onClick={() => setDialogOpen(false)}
-                    >
-                      PAIS/RESPONSÁVEIS
-                    </a>
-                    <a
-                      href="https://educacional.dominicanas.org.br/CNSD/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center px-6 py-4 bg-[#0b2255] text-white font-bold rounded-lg hover:bg-[#0b2255]/90 transition-colors duration-200"
-                      onClick={() => setDialogOpen(false)}
-                    >
-                      COLABORADORES
-                    </a>
-                  </div>
-                </DialogContent>
-              </Dialog>
+              <button 
+                className="flex flex-col items-center gap-1 text-[#b3b3b3] hover:text-[#0b2255] transition-colors group"
+                onClick={() => setAreaRestritaOpen(true)}
+              >
+                <FaUserShield size={28} className="group-hover:scale-110 transition-transform" />
+                <span className="text-[10px] font-medium whitespace-nowrap">ÁREA RESTRITA</span>
+              </button>
             </div>
           </div>
         </div>
