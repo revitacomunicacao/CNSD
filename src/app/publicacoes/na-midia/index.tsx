@@ -1,4 +1,5 @@
 import { useContent } from "@/hooks/useContent"
+import useSeo from "@/hooks/useSeo"
 
 interface INaMidia {
   id?: number
@@ -14,6 +15,11 @@ interface INaMidia {
 }
 
 export default function NaMidia() {
+  useSeo({
+    title: "Na Mídia - CNSD",
+    description: "Veja as matérias sobre o Colégio Nossa Senhora das Dores na mídia",
+  })
+
   const { data: naMidia, loading, error } = useContent<INaMidia>("na-midia")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

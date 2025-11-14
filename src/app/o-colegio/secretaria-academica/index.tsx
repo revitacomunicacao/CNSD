@@ -3,6 +3,7 @@ import { ISecretariaAcademica } from "./types/ISecretariaAcademica"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { axiosClient } from "@/api/axiosClient"
+import useSeo from "@/hooks/useSeo"
 
 interface FormData {
   nome: string
@@ -20,6 +21,11 @@ interface FormErrors {
 }
 
 export default function SecretariaDigital() {
+  useSeo({
+    title: "Secretaria Acadêmica - CNSD",
+    description: "Acesse os serviços da secretaria acadêmica do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: secretaria, loading, error, refetch } = useContent<ISecretariaAcademica>("o-colegio/secretaria-academica")
   
   const [formData, setFormData] = useState<FormData>({

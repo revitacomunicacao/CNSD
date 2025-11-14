@@ -1,6 +1,7 @@
 import { useContent } from "@/hooks/useContent"
 import { IEscolaDeEsportes } from "./types/IEscolaDeEsportes"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import useSeo from "@/hooks/useSeo"
 import { 
   Carousel, 
   CarouselContent, 
@@ -10,6 +11,11 @@ import {
 } from "@/components/ui/carousel"
 
 export default function EscolaDeEsportes() {
+  useSeo({
+    title: "Escola de Esportes - CNSD",
+    description: "Conheça a escola de esportes do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: escola, loading, error } = useContent<IEscolaDeEsportes>("atividades/esportes-escola-de-esportes")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

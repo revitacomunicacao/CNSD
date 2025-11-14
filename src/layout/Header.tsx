@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import logo from "@/assets/logo.png"
 import { Input } from "@/components/ui/input"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { ChevronDown, Search, Menu, ChevronRight, X } from "lucide-react"
 
 import { RiGraduationCapFill } from "react-icons/ri";
@@ -39,10 +39,15 @@ export const Header = () => {
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<number | null>(null)
   const [expandedMobileSubMenu, setExpandedMobileSubMenu] = useState<string | null>(null)
 
+  const navigate = useNavigate()
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    if (searchTerm.trim()) {
-      window.open(`/?s=${encodeURIComponent(searchTerm)}`, '_blank')
+    const normalized = searchTerm.trim()
+    if (normalized) {
+      navigate(`/busca?q=${encodeURIComponent(normalized)}`)
+      setMobileMenuOpen(false)
+      window.scrollTo({ top: 0, behavior: "smooth" })
     }
   }
 
@@ -439,6 +444,64 @@ export const Header = () => {
                     </li>
                   ))}
                 </ul>
+
+                {/* Quick Links Section */}
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <h3 className="px-4 mb-4 text-sm font-bold text-gray-500 uppercase">Links Rápidos</h3>
+                  <ul className="space-y-2">
+                    {/* Webmail */}
+                    <li>
+                      <a
+                        href="http://webmail.cnsd.com.br/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 font-bold text-gray-900 hover:bg-gray-100 rounded-md transition-all"
+                      >
+                        <MdOutlineEmail size={20} className="text-[#0b2255]" />
+                        <span>Webmail</span>
+                      </a>
+                    </li>
+
+                    {/* Trabalhe Conosco */}
+                    <li>
+                      <Link
+                        to="/trabalhe-conosco"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 font-bold text-gray-900 hover:bg-gray-100 rounded-md transition-all"
+                      >
+                        <FaUsers size={20} className="text-[#0b2255]" />
+                        <span>Trabalhe Conosco</span>
+                      </Link>
+                    </li>
+
+                    {/* TV CNSD */}
+                    <li>
+                      <Link
+                        to="/tv-cnsd"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 font-bold text-gray-900 hover:bg-gray-100 rounded-md transition-all"
+                      >
+                        <PiTelevisionBold size={20} className="text-[#0b2255]" />
+                        <span>TV CNSD</span>
+                      </Link>
+                    </li>
+
+                    {/* Área Restrita */}
+                    <li>
+                      <button
+                        onClick={() => {
+                          setAreaRestritaOpen(true)
+                          setMobileMenuOpen(false)
+                        }}
+                        className="flex items-center gap-3 w-full px-4 py-3 text-left font-bold text-gray-900 hover:bg-gray-100 rounded-md transition-all"
+                      >
+                        <FaUserShield size={20} className="text-[#0b2255]" />
+                        <span>Área Restrita</span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </nav>
             </div>
           </div>
@@ -593,50 +656,6 @@ export const Header = () => {
             </form>
             
             <div className="flex gap-6">
-              <div
-                className="relative"
-                onMouseEnter={() => setEgressoMenuOpen(true)}
-                onMouseLeave={() => setEgressoMenuOpen(false)}
-              >
-                <button
-                  className={`flex flex-col items-center gap-1 transition-colors group ${
-                    egressoMenuOpen ? "text-[#0b2255]" : "text-[#b3b3b3] hover:text-[#0b2255]"
-                  }`}
-                  onClick={() => setEgressoMenuOpen((prev) => !prev)}
-                >
-                  <RiGraduationCapFill size={28} className="group-hover:scale-110 transition-transform" />
-                  <span className="text-[10px] font-medium whitespace-nowrap flex items-center gap-1">
-                    EGRESSO
-                    <ChevronDown
-                      className={`w-3 h-3 transition-transform duration-200 ${egressoMenuOpen ? "rotate-180" : ""}`}
-                    />
-                  </span>
-                </button>
-
-                <div
-                  className={`absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden transition-all duration-200 z-50 ${
-                    egressoMenuOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
-                  }`}
-                >
-                  <ul className="py-2">
-                    {egressoLinks.map((link) => (
-                      <li key={link.name}>
-                        <a
-                          href={link.href}
-                          target={link.external ? "_blank" : undefined}
-                          rel={link.external ? "noopener noreferrer" : undefined}
-                          className="flex items-center justify-between px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-50 hover:text-[#0b2255] transition-colors duration-200"
-                          onClick={() => setEgressoMenuOpen(false)}
-                        >
-                          <span>{link.name}</span>
-                          {link.external && <ChevronRight className="w-4 h-4 text-gray-300" />}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              
               <a 
                 href="http://webmail.cnsd.com.br/" 
                 className="flex flex-col items-center gap-1 text-[#b3b3b3] hover:text-[#0b2255] transition-colors group"

@@ -1,6 +1,7 @@
 import { useContent } from "@/hooks/useContent"
 import { IFlauta } from "./types/IFlauta"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import useSeo from "@/hooks/useSeo"
 import { 
   Carousel, 
   CarouselContent, 
@@ -10,6 +11,11 @@ import {
 } from "@/components/ui/carousel"
 
 export default function Flauta() {
+  useSeo({
+    title: "Flauta - CNSD",
+    description: "Conheça o curso de flauta do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: flauta, loading, error } = useContent<IFlauta>("/atividades/flauta")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import { axiosClient } from "@/api/axiosClient"
+import useSeo from "@/hooks/useSeo"
 
 interface IDiretoraDetalhe {
   title: string
@@ -11,6 +12,11 @@ interface IDiretoraDetalhe {
 }
 
 export default function DetalheDiretora() {
+  useSeo({
+    title: "Diretora - CNSD",
+    description: "Conheça a diretora do Colégio Nossa Senhora das Dores",
+  })
+
   const { slug } = useParams()
   const [diretora, setDiretora] = useState<IDiretoraDetalhe | null>(null)
   const [loading, setLoading] = useState(true)

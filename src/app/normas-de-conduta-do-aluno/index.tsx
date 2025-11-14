@@ -1,4 +1,5 @@
 import { useContent } from "@/hooks/useContent"
+import useSeo from "@/hooks/useSeo"
 
 interface INormasDeConduta {
   id: number
@@ -13,6 +14,11 @@ const obterTitulo = (item: INormasDeConduta) => item.titulo || item.title || "No
 const obterConteudo = (item: INormasDeConduta) => item.description || item.conteudo || item.conteudoPrincipal || ""
 
 export default function NormasDeCondutaDoAluno() {
+  useSeo({
+    title: "Normas de Conduta do Aluno - CNSD",
+    description: "Conheça as normas de conduta do Colégio Nossa Senhora das Dores",
+  })
+
   const { data, loading, error } = useContent<INormasDeConduta>("normas-de-conduta/normas-de-conduta-do-aluno")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

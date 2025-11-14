@@ -1,6 +1,7 @@
 import { useContent } from "@/hooks/useContent"
 import { ILinhaDoTempo } from "./types/ILinhaDoTempo"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import useSeo from "@/hooks/useSeo"
 import { 
   Carousel, 
   CarouselContent, 
@@ -10,6 +11,11 @@ import {
 } from "@/components/ui/carousel"
 
 export default function LinhaDoTempo() {
+  useSeo({
+    title: "Linha do Tempo - CNSD",
+    description: "Conheça a linha do tempo das ações de responsabilidade social do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: linhaDoTempo, loading, error } = useContent<ILinhaDoTempo>("res-social/linha-do-tempo")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

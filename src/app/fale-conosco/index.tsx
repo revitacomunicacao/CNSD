@@ -1,6 +1,7 @@
 import { useState } from "react"
 import faleConoscoImg from "@/assets/fale-conosco-v2.jpg"
 import { axiosClient } from "@/api/axiosClient"
+import useSeo from "@/hooks/useSeo"
 
 interface FormValues {
   nome: string
@@ -28,6 +29,11 @@ const initialValues: FormValues = {
 type FormErrors = Partial<Record<keyof FormValues, string>>
 
 export default function FaleConosco() {
+  useSeo({
+    title: "Fale Conosco - CNSD",
+    description: "Entre em contato com o Colégio Nossa Senhora das Dores",
+  })
+
   const [values, setValues] = useState<FormValues>(initialValues)
   const [errors, setErrors] = useState<FormErrors>({})
   const [submitting, setSubmitting] = useState(false)

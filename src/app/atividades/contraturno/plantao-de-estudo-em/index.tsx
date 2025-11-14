@@ -1,6 +1,7 @@
 import { useContent } from "@/hooks/useContent"
 import { IPlantaoDeEstudoEm } from "./types/IPlantaoDeEstudoEm"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import useSeo from "@/hooks/useSeo"
 import { 
   Carousel, 
   CarouselContent, 
@@ -10,6 +11,11 @@ import {
 } from "@/components/ui/carousel"
 
 export default function PlantaoDeEstudoEm() {
+  useSeo({
+    title: "Plantão de Apoio Pedagógico - Ensino Médio - CNSD",
+    description: "Conheça o plantão de apoio pedagógico para o Ensino Médio do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: plantao, loading, error } = useContent<IPlantaoDeEstudoEm>("atividades/contraturno-plantao-de-apoio-pedagogico-ensino-medio")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

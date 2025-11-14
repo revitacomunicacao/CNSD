@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { IAdministracao } from "./types/IAdministracao"
+import useSeo from "@/hooks/useSeo"
 
 export default function Administracao() {
+  useSeo({
+    title: "Administração - Ensino Técnico - CNSD",
+    description: "Conheça o curso técnico em Administração do Colégio Nossa Senhora das Dores",
+  })
   const { data: administracao, loading, error } = useContent<IAdministracao>("ensino/ensino-tecnico-administracao")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

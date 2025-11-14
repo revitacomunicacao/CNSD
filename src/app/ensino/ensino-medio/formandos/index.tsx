@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { IFormandos } from "./types/IFormandos"
+import useSeo from "@/hooks/useSeo"
 
 export default function Formandos() {
+  useSeo({
+    title: "Formandos - Ensino Médio - CNSD",
+    description: "Conheça os formandos do Ensino Médio do Colégio Nossa Senhora das Dores",
+  })
   const { data: formandos, loading, error } = useContent<IFormandos>("ensino/ensino-medio-formandos")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

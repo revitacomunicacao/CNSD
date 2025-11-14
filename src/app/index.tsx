@@ -26,10 +26,8 @@ interface IGaleriaDeFotos {
 
 export default function HomePage() {
   useSeo({
-    title: "Home",
-    description: "Home",
-    image: "https://via.placeholder.com/150",
-    icon: "https://via.placeholder.com/150",
+    title: "Colégio Nossa Senhora das Dores - CNSD",
+    description: "Colégio Nossa Senhora das Dores - Educação de qualidade em Uberaba",
   });
 
   const { data: home, loading, error } = useContent<IHome>("/home");
@@ -76,7 +74,7 @@ export default function HomePage() {
       {/* HERO rotativo full-screen */}
       {/* */}
       {Array.isArray(banners) && banners.length > 0 && (
-        <section className="relative w-full h-[25svh] md:min-h-[100svh] md:h-[100svh] overflow-hidden mb-[-25px] pb-0">
+        <section className="w-full overflow-hidden">
           <Carousel
             className="w-full h-full"
             opts={{ align: "start", loop: true }}
@@ -108,7 +106,7 @@ export default function HomePage() {
                     {href ? (
                       <a
                         href={href}
-                        target="_blank"
+                        target=""
                         rel="noopener noreferrer"
                         aria-label={b?.nome || "Banner"}
                       >
@@ -153,7 +151,7 @@ export default function HomePage() {
                   >
                     <a
                       href={link}
-                      target="_blank"
+                      target=""
                       rel="noopener noreferrer"
                       className="hover:underline inline-flex items-center gap-2"
                     >
@@ -200,7 +198,7 @@ export default function HomePage() {
                     <img
                       src={imagem}
                       alt={nome}
-                      className="h-[320px] w-auto"
+                      className="h-auto w-[320px]"
                       loading="lazy"
                     />
                   </div>
@@ -217,7 +215,7 @@ export default function HomePage() {
                   {href ? (
                     <a
                       href={href}
-                      target="_blank"
+                      target=""
                       rel="noopener noreferrer"
                       className="block"
                     >
@@ -296,7 +294,7 @@ export default function HomePage() {
                   {href ? (
                     <a
                       href={href}
-                      target="_blank"
+                      target=""
                       rel="noopener noreferrer"
                       className="block"
                     >

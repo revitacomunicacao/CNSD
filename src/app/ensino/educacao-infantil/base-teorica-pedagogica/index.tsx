@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { IBaseTeorica } from "./types/IBaseTeorica"
+import useSeo from "@/hooks/useSeo"
 
 export default function BaseTeorica() {
+  useSeo({
+    title: "Base Teórica-Pedagógica - Educação Infantil - CNSD",
+    description: "Conheça a base teórica-pedagógica da Educação Infantil do Colégio Nossa Senhora das Dores",
+  })
   const { data: baseTeorica, loading, error } = useContent<IBaseTeorica>("ensino/educacao-infantil-base-teorica-pedagogica")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

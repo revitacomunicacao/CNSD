@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { IDesafiosESimulados } from "./types/IDesafiosESimulados"
+import useSeo from "@/hooks/useSeo"
 
 export default function DesafiosESimulados() {
+  useSeo({
+    title: "Desafios e Simulados - Ensino Fundamental Anos Finais - CNSD",
+    description: "Conheça os desafios e simulados do Ensino Fundamental Anos Finais do Colégio Nossa Senhora das Dores",
+  })
   const { data: desafios, loading, error } = useContent<IDesafiosESimulados>("ensino/ensino-fundamental-anos-finais-desafios-e-simulados")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

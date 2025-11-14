@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { IAprovadosNoVestibular } from "./types/IAprovadosNoVestibular"
+import useSeo from "@/hooks/useSeo"
 
 export default function AprovadosNoVestibular() {
+  useSeo({
+    title: "Aprovados no Vestibular - Ensino Médio - CNSD",
+    description: "Conheça os aprovados no vestibular do Ensino Médio do Colégio Nossa Senhora das Dores",
+  })
   const { data: aprovados, loading, error } = useContent<IAprovadosNoVestibular>("ensino/ensino-medio-aprovados-no-vestibular")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

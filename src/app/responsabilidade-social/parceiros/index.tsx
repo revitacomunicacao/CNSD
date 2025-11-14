@@ -1,5 +1,6 @@
 import { useContent } from "@/hooks/useContent"
 import { IParceiros } from "./types/IParceiros"
+import useSeo from "@/hooks/useSeo"
 import {
   Carousel,
   CarouselContent,
@@ -9,6 +10,11 @@ import {
 } from "@/components/ui/carousel"
 
 export default function Parceiros() {
+  useSeo({
+    title: "Parceiros - CNSD",
+    description: "Conheça os parceiros do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: parceiros, loading, error } = useContent<IParceiros>("res-social/parceiros")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

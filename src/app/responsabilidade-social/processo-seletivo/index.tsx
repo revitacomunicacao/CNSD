@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { IProcessoSeletivo } from "./types/IProcessoSeletivo"
+import useSeo from "@/hooks/useSeo"
 
 export default function ProcessoSeletivo() {
+  useSeo({
+    title: "Processo Seletivo - CNSD",
+    description: "Conheça o processo seletivo do Colégio Nossa Senhora das Dores",
+  })
   const { data: processoSeletivo, loading, error } = useContent<IProcessoSeletivo>("res-social/processo-seletivo")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

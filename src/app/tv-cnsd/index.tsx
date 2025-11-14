@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react"
 import { useContent } from "@/hooks/useContent"
 import { ITvCnsd, IPagination } from "./types/ITvCnsd"
+import useSeo from "@/hooks/useSeo"
 import {
   Pagination,
   PaginationContent,
@@ -48,6 +49,11 @@ const createPaginationRange = (current: number, total: number, delta = 1): Array
 }
 
 export default function TvCNSD() {
+  useSeo({
+    title: "TV CNSD - CNSD",
+    description: "Assista aos vídeos e conteúdos da TV CNSD",
+  })
+
   const [currentPage, setCurrentPage] = useState(1)
   const endpoint = useMemo(() => `publicacoes/tv-cnsd?page=${currentPage}`, [currentPage])
   const { data: tvCnsd, loading, error } = useContent<ITvCnsd>(endpoint)

@@ -1,8 +1,13 @@
 import { useParams } from "react-router-dom"
 import { useContentId } from "@/hooks/useContentId"
 import { INoticiaDetalhe } from "../types/INoticiaDetalhes"
+import useSeo from "@/hooks/useSeo"
 
 export default function DetalhesPost() {
+  useSeo({
+    title: "Notícia - CNSD",
+    description: "Leia a notícia completa do Colégio Nossa Senhora das Dores",
+  })
   const { slug } = useParams()
   const { data: conteudo, loading, error } = useContentId<INoticiaDetalhe[]>("blog/post", String(slug))
 

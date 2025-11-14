@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { ISimulados } from "./types/ISimulados"
+import useSeo from "@/hooks/useSeo"
 
 export default function Simulados() {
+  useSeo({
+    title: "Simulados - Ensino Médio - CNSD",
+    description: "Conheça os simulados do Ensino Médio do Colégio Nossa Senhora das Dores",
+  })
   const { data: simulados, loading, error } = useContent<ISimulados>("ensino/ensino-medio-simulados")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

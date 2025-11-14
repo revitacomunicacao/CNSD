@@ -2,8 +2,14 @@ import { useContent } from "@/hooks/useContent"
 import { IEstruturaFisica } from "./types/INossaEstrutura"
 import { useState } from "react"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import useSeo from "@/hooks/useSeo"
 
 export default function NossaEstrutura() {
+  useSeo({
+    title: "Nossa Estrutura - CNSD",
+    description: "Conheça a estrutura física do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: estrutura, loading, error } = useContent<IEstruturaFisica>("o-colegio/estrutura-fisica")
   const [openAccordion, setOpenAccordion] = useState<number | null>(0)
 

@@ -1,6 +1,7 @@
 import { useContent } from "@/hooks/useContent"
 import { IBiblioteca } from "./types/IBiblioteca"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import useSeo from "@/hooks/useSeo"
 import { 
   Carousel, 
   CarouselContent, 
@@ -10,6 +11,11 @@ import {
 } from "@/components/ui/carousel"
 
 export default function Biblioteca() {
+  useSeo({
+    title: "Biblioteca - CNSD",
+    description: "Conheça a biblioteca do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: biblioteca, loading, error } = useContent<IBiblioteca>("atividades/biblioteca")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

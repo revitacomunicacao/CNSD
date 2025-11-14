@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { IRevistaInformativo } from "./types/IRevistaInformativo"
+import useSeo from "@/hooks/useSeo"
 
 export default function RevistaInformativo() {
+  useSeo({
+    title: "Revista/Informativo - CNSD",
+    description: "Acesse as revistas e informativos do Colégio Nossa Senhora das Dores",
+  })
   const { data: revista, loading, error } = useContent<IRevistaInformativo>("publicacoes/revista-inforcativo")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

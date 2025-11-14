@@ -1,6 +1,7 @@
 import { useContent } from "@/hooks/useContent"
 import { IPastoral } from "./types/IPastoral"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import useSeo from "@/hooks/useSeo"
 import { 
   Carousel, 
   CarouselContent, 
@@ -10,6 +11,11 @@ import {
 } from "@/components/ui/carousel"
 
 export default function Pastoral() {
+  useSeo({
+    title: "Pastoral - CNSD",
+    description: "Conheça a pastoral do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: pastoral, loading, error } = useContent<IPastoral>("atividades/pastoral")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

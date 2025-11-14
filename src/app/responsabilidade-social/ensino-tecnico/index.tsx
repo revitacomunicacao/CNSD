@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { IEnsinoTecnico } from "./types/IEnsinoTecnico"
+import useSeo from "@/hooks/useSeo"
 
 export default function EnsinoTecnico() {
+  useSeo({
+    title: "Ensino Técnico - Responsabilidade Social - CNSD",
+    description: "Conheça o ensino técnico de responsabilidade social do Colégio Nossa Senhora das Dores",
+  })
   const { data: ensinoTecnico, loading, error } = useContent<IEnsinoTecnico>("res-social/ensino-tecnico")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

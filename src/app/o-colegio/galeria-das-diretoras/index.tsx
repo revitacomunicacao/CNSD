@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { axiosClient } from "@/api/axiosClient"
+import useSeo from "@/hooks/useSeo"
 
 interface IDiretoraResumo {
   title: string
@@ -11,6 +12,11 @@ interface IDiretoraResumo {
 }
 
 export default function GaleriaDasDiretoras() {
+  useSeo({
+    title: "Galeria das Diretoras - CNSD",
+    description: "Conheça as diretoras que fizeram parte da história do Colégio Nossa Senhora das Dores",
+  })
+
   const [diretoras, setDiretoras] = useState<IDiretoraResumo[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)

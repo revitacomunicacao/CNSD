@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { IFormacaoContinua } from "./types/IFormacaoContinua"
+import useSeo from "@/hooks/useSeo"
 
 export default function FormacaoContinua() {
+  useSeo({
+    title: "Formação Continuada - Ensino Técnico - CNSD",
+    description: "Conheça a formação continuada do Ensino Técnico do Colégio Nossa Senhora das Dores",
+  })
   const { data: formacao, loading, error } = useContent<IFormacaoContinua>("ensino/ensino-tecnico-formacao-continuada")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

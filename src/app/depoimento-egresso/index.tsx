@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react"
 import { axiosClient } from "@/api/axiosClient"
+import useSeo from "@/hooks/useSeo"
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024 // 5 MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"]
@@ -36,6 +37,11 @@ const initialValues: FormValues = {
 }
 
 export default function DepoimentosEgresso() {
+  useSeo({
+    title: "Depoimento Egresso - CNSD",
+    description: "Deixe seu depoimento sobre sua experiência no Colégio Nossa Senhora das Dores",
+  })
+
   const [values, setValues] = useState<FormValues>(initialValues)
   const [errors, setErrors] = useState<FormErrors>({})
   const [submitting, setSubmitting] = useState(false)

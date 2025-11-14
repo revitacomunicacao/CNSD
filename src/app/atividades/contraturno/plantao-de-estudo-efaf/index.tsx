@@ -1,6 +1,7 @@
 import { useContent } from "@/hooks/useContent"
 import { IPlantaoDeEstudoEfaf } from "./types/IPlantaoDeEstudoEfaf"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import useSeo from "@/hooks/useSeo"
 import { 
   Carousel, 
   CarouselContent, 
@@ -10,6 +11,11 @@ import {
 } from "@/components/ui/carousel"
 
 export default function PlantaoDeEstudoEfaf() {
+  useSeo({
+    title: "Plantão de Apoio Pedagógico - Fundamental Anos Finais - CNSD",
+    description: "Conheça o plantão de apoio pedagógico para o Ensino Fundamental Anos Finais do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: plantao, loading, error } = useContent<IPlantaoDeEstudoEfaf>("atividades/contraturno-plantao-de-apoio-pedagogico-fundamental-anos-finais")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

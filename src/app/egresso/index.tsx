@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { axiosClient } from "@/api/axiosClient"
+import useSeo from "@/hooks/useSeo"
 
 type FeedbackState = {
   type: "success" | "error"
@@ -7,6 +8,11 @@ type FeedbackState = {
 } | null
 
 export default function Egresso() {
+  useSeo({
+    title: "Egresso - CNSD",
+    description: "Faça seu cadastro como egresso do Colégio Nossa Senhora das Dores",
+  })
+
   const [submitting, setSubmitting] = useState(false)
   const [feedback, setFeedback] = useState<FeedbackState>(null)
 

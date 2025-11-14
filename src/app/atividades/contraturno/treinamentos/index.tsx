@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { ITreinamentos } from "./types/ITreinamentos"
+import useSeo from "@/hooks/useSeo"
 
 export default function Treinamentos() {
+  useSeo({
+    title: "Treinamentos - CNSD",
+    description: "Conheça os treinamentos oferecidos pelo Colégio Nossa Senhora das Dores",
+  })
   const { data: treinamentos, loading, error } = useContent<ITreinamentos>("atividades/contraturno-treinamentos")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

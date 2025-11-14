@@ -1,6 +1,7 @@
 import { useContent } from "@/hooks/useContent"
 import { IPeriodoDePermanenciaIntegral } from "./types/IPeriodoDePermanenciaIntegral"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import useSeo from "@/hooks/useSeo"
 import { 
   Carousel, 
   CarouselContent, 
@@ -10,6 +11,11 @@ import {
 } from "@/components/ui/carousel"
 
 export default function PeriodoDePermanenciaIntegral() {
+  useSeo({
+    title: "Período de Permanência Integral - CNSD",
+    description: "Conheça o período de permanência integral do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: permanencia, loading, error } = useContent<IPeriodoDePermanenciaIntegral>("atividades/contraturno-periodo-de-permanencia-integral")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

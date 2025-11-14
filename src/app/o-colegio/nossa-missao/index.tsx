@@ -1,5 +1,6 @@
 import { useContent } from "@/hooks/useContent";
 import { INossaMissao } from "./types/INossaMissao";
+import useSeo from "@/hooks/useSeo";
 
 type Bloco = {
   titulo: string;
@@ -29,6 +30,11 @@ function PainelBloco({ titulo, descricao }: Bloco) {
 }
 
 export default function NossaMissao() {
+  useSeo({
+    title: "Nossa Missão - CNSD",
+    description: "Conheça a missão e valores do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: conteudo, loading, error } =
     useContent<INossaMissao>("o-colegio/nossa-missao");
 

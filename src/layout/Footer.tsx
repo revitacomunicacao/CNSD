@@ -1,5 +1,6 @@
 import logo from "@/assets/logo.png"
 import bgFooter from "@/assets/fundo-rodape.jpg"
+import assinatura from "@/assets/assinatura.png"
 
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaSpotify, FaSoundcloud } from "react-icons/fa";
 
@@ -96,6 +97,9 @@ export const Footer = () => {
             title="Localização CNSD"
           />
         </div>
+      </div>
+      <div className="w-full flex justify-end bg-[#660042] p-2">
+        <img src={assinatura} alt="assinatura da revita" />
       </div>
     </footer>
   )

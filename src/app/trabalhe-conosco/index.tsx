@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react"
 import { axiosClient } from "@/api/axiosClient"
+import useSeo from "@/hooks/useSeo"
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5 MB
 const ACCEPTED_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
@@ -59,6 +60,11 @@ const tipoCurriculoOptions = [
 ]
 
 export default function TrabalheConosco() {
+  useSeo({
+    title: "Trabalhe Conosco - CNSD",
+    description: "Venha fazer parte da equipe do Colégio Nossa Senhora das Dores",
+  })
+
   const [values, setValues] = useState<FormValues>(initialValues)
   const [errors, setErrors] = useState<FormErrors>({})
   const [submitting, setSubmitting] = useState(false)

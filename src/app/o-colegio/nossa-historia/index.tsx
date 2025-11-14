@@ -1,7 +1,13 @@
 import { useContent } from "@/hooks/useContent"
 import { IHistoria } from "./types/IHistoria"
+import useSeo from "@/hooks/useSeo"
 
 export default function NossaHistoria() {
+  useSeo({
+    title: "Nossa História - CNSD",
+    description: "Conheça a história do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: historia, loading, error, refetch } = useContent<IHistoria>('o-colegio/nossa-historia')
   return(
     <main>

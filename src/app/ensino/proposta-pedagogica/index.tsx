@@ -1,4 +1,5 @@
 import { useContent } from "@/hooks/useContent"
+import useSeo from "@/hooks/useSeo"
 
 interface IPropostaPedagogica {
   id: number
@@ -9,6 +10,11 @@ interface IPropostaPedagogica {
 }
 
 export default function PropostaPedagogica() {
+  useSeo({
+    title: "Proposta Pedagógica - CNSD",
+    description: "Conheça a proposta pedagógica do Colégio Nossa Senhora das Dores",
+  })
+
   const { data, loading, error } = useContent<IPropostaPedagogica>("ensino/proposta-pedagogica")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

@@ -1,6 +1,7 @@
 import { useContent } from "@/hooks/useContent"
 import { IApoioPedagogicoAoAluno } from "./types/IApoioPedagogicoAoAluno"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import useSeo from "@/hooks/useSeo"
 import { 
   Carousel, 
   CarouselContent, 
@@ -10,6 +11,11 @@ import {
 } from "@/components/ui/carousel"
 
 export default function ApoioPedagogicoAoAluno() {
+  useSeo({
+    title: "Apoio Pedagógico Fundamental Anos Iniciais - CNSD",
+    description: "Conheça o apoio pedagógico para o Ensino Fundamental Anos Iniciais do Colégio Nossa Senhora das Dores",
+  })
+
   const { data: apoio, loading, error } = useContent<IApoioPedagogicoAoAluno>("atividades/contraturno-apoio-pedagogico-ao-aluno")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>

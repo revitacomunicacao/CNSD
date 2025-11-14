@@ -4,6 +4,7 @@ import { useBlogCategories } from "@/hooks/useBlogCategories"
 import { useBlogByCategory } from "@/hooks/useBlogByCategory"
 import { useContent } from "@/hooks/useContent"
 import { INoticias } from "./types/INoticias"
+import useSeo from "@/hooks/useSeo"
 import {
   Pagination,
   PaginationContent,
@@ -15,6 +16,11 @@ import {
 } from "@/components/ui/pagination"
 
 export default function Noticias() {
+  useSeo({
+    title: "Notícias - CNSD",
+    description: "Acompanhe as últimas notícias do Colégio Nossa Senhora das Dores",
+  })
+
   const [searchParams, setSearchParams] = useSearchParams()
   const currentPage = parseInt(searchParams.get("page") || "1", 10)
   const categoriaSlug = searchParams.get("categoria") || null

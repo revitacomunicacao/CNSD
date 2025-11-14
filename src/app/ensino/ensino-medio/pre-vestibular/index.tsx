@@ -1,7 +1,12 @@
 import { useContent } from "@/hooks/useContent"
 import { IPreVestibular } from "./types/IPreVestibular"
+import useSeo from "@/hooks/useSeo"
 
 export default function PreVestibular() {
+  useSeo({
+    title: "Pré-Vestibular - Ensino Médio - CNSD",
+    description: "Conheça o pré-vestibular do Ensino Médio do Colégio Nossa Senhora das Dores",
+  })
   const { data: preVestibular, loading, error } = useContent<IPreVestibular>("ensino/ensino-medio-pre-vestibular")
 
   if (loading) return <div className="py-20 text-center">Carregando…</div>
