@@ -61,10 +61,6 @@ export const Header = () => {
 
   const egressoLinks: Array<{ name: string; href: string; external?: boolean }> = [
     {
-      name: "Faça seu cadastro",
-      href: "/egresso",
-    },
-    {
       name: "Deixe seu depoimento",
       href: "/depoimento-egresso/",
     },
@@ -138,7 +134,7 @@ export const Header = () => {
         },
         {
           name: "Galeria das Diretoras",
-          href: "/o-colegio/galeria-das-diretoras",
+          href: "/galeria-das-diretoras",
         },
         {
           name: "Trabalhe Conosco",
@@ -449,6 +445,42 @@ export const Header = () => {
                 <div className="mt-8 pt-6 border-t border-gray-200">
                   <h3 className="px-4 mb-4 text-sm font-bold text-gray-500 uppercase">Links Rápidos</h3>
                   <ul className="space-y-2">
+                    {/* Egresso Menu */}
+                    <li>
+                      <div className="relative">
+                        <button
+                          onClick={() => setEgressoMenuOpen((prev) => !prev)}
+                          className="flex items-center justify-between w-full px-4 py-3 text-left font-bold text-gray-900 hover:bg-gray-100 rounded-md transition-all"
+                        >
+                          <div className="flex items-center gap-3">
+                            <RiGraduationCapFill size={20} className="text-[#0b2255]" />
+                            <span>Egresso</span>
+                          </div>
+                          <ChevronRight 
+                            className={`w-4 h-4 transition-transform duration-200 ${egressoMenuOpen ? "rotate-90" : ""}`}
+                          />
+                        </button>
+                        {egressoMenuOpen && (
+                          <ul className="ml-4 mt-2 space-y-1">
+                            {egressoLinks.map((link) => (
+                              <li key={link.name}>
+                                <Link
+                                  to={link.href}
+                                  onClick={() => {
+                                    setMobileMenuOpen(false)
+                                    setEgressoMenuOpen(false)
+                                  }}
+                                  className="block px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 rounded-md"
+                                >
+                                  {link.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </li>
+
                     {/* Webmail */}
                     <li>
                       <a
@@ -656,6 +688,50 @@ export const Header = () => {
             </form>
             
             <div className="flex gap-6">
+              <div
+                className="relative"
+                onMouseEnter={() => setEgressoMenuOpen(true)}
+                onMouseLeave={() => setEgressoMenuOpen(false)}
+              >
+                <button
+                  className={`flex flex-col items-center gap-1 transition-colors group ${
+                    egressoMenuOpen ? "text-[#0b2255]" : "text-[#b3b3b3] hover:text-[#0b2255]"
+                  }`}
+                  onClick={() => setEgressoMenuOpen((prev) => !prev)}
+                >
+                  <RiGraduationCapFill size={28} className="group-hover:scale-110 transition-transform" />
+                  <span className="text-[10px] font-medium whitespace-nowrap flex items-center gap-1">
+                    EGRESSO
+                    <ChevronDown
+                      className={`w-3 h-3 transition-transform duration-200 ${egressoMenuOpen ? "rotate-180" : ""}`}
+                    />
+                  </span>
+                </button>
+
+                <div
+                  className={`absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden transition-all duration-200 z-50 ${
+                    egressoMenuOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
+                  }`}
+                >
+                  <ul className="py-2">
+                    {egressoLinks.map((link) => (
+                      <li key={link.name}>
+                        <Link
+                          to={link.href}
+                          target={link.external ? "_blank" : undefined}
+                          rel={link.external ? "noopener noreferrer" : undefined}
+                          className="flex items-center justify-between px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-50 hover:text-[#0b2255] transition-colors duration-200"
+                          onClick={() => setEgressoMenuOpen(false)}
+                        >
+                          <span>{link.name}</span>
+                          {link.external && <ChevronRight className="w-4 h-4 text-gray-300" />}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              
               <a 
                 href="http://webmail.cnsd.com.br/" 
                 className="flex flex-col items-center gap-1 text-[#b3b3b3] hover:text-[#0b2255] transition-colors group"

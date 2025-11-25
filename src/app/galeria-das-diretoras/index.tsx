@@ -65,7 +65,7 @@ export default function GaleriaDasDiretoras() {
             {diretoras.map(({ slug, title, periodo, descricao, foto }) => (
               <Link
                 key={slug}
-                to={`/o-colegio/galeria-das-diretoras/${slug}`}
+                to={`/galeria-das-diretoras/${slug}`}
                 className="flex flex-col bg-white rounded-lg overflow-hidden shadow transition-shadow hover:shadow-lg"
               >
                 {foto && (
@@ -109,3 +109,4 @@ export default function GaleriaDasDiretoras() {
     </main>
   )
 }
+
