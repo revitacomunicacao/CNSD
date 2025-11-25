@@ -114,29 +114,31 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
 /* Remove espaço superior do primeiro bloco de conteúdo após o breadcrumb */
-.breadcrumbs-container + main,
-.breadcrumbs-container + main main,
-.breadcrumbs-container + div main {
+.breadcrumbs-container+main,
+.breadcrumbs-container+main main,
+.breadcrumbs-container+div main {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
 
 /* Pequeno espaço superior/inferior no primeiro título após o breadcrumb */
-.breadcrumbs-container + main h1:first-child,
-.breadcrumbs-container + main section > h1:first-child,
-.breadcrumbs-container + div main h1:first-child,
-.breadcrumbs-container + div main section > h1:first-child {
+.breadcrumbs-container+main h1:first-child,
+.breadcrumbs-container+main section>h1:first-child,
+.breadcrumbs-container+div main h1:first-child,
+.breadcrumbs-container+div main section>h1:first-child {
   margin-top: 0.5rem;
   margin-bottom: 0.75rem;
   font-size: 42px !important;
   line-height: 1.2;
-  font-weight: 600 !important; /* um pouco mais fino que bold */
+  font-weight: 600 !important;
+  /* um pouco mais fino que bold */
   color: var(--primary);
   text-align: left !important;
 }

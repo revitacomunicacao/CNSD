@@ -134,7 +134,7 @@ export const Header = () => {
         },
         {
           name: "Galeria das Diretoras",
-          href: "/galeria-das-diretoras",
+          href: "/o-colegio/galeria-das-diretoras",
         },
         {
           name: "Trabalhe Conosco",

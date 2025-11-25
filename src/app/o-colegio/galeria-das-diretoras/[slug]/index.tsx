@@ -68,7 +68,7 @@ export default function DetalheDiretora() {
       <main className="flex justify-center items-start my-12 md:my-20">
         <section className="w-full max-w-[1200px] flex flex-col gap-10 px-4">
           <div className="flex flex-col gap-3 items-center text-center">
-            <Link to="/galeria-das-diretoras" className="self-start text-sm text-primary hover:underline">
+            <Link to="/o-colegio/galeria-das-diretoras" className="self-start text-sm text-primary hover:underline">
               ← Voltar para a galeria
             </Link>
 
