@@ -233,3 +233,45 @@
 .content-html .vc_tta-panel-body {
   @apply p-4;
 }
+
+/* ---------- WordPress content helpers (Notícias) ---------- */
+.wp-content .wp-block-gallery,
+.wp-content figure.wp-block-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 1.25rem 0;
+}
+
+/* WP costuma aninhar figure.wp-block-image dentro da galeria */
+.wp-content .wp-block-gallery > figure,
+.wp-content figure.wp-block-gallery > figure,
+.wp-content .wp-block-gallery .wp-block-image,
+.wp-content figure.wp-block-gallery .wp-block-image {
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.wp-content .wp-block-gallery img,
+.wp-content figure.wp-block-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .wp-content .wp-block-gallery,
+  .wp-content figure.wp-block-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .wp-content .wp-block-gallery,
+  .wp-content figure.wp-block-gallery {
+    grid-template-columns: 1fr;
+  }
+}
