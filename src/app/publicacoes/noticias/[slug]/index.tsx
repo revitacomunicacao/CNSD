@@ -27,27 +27,45 @@ export default function DetalhesPost() {
     const root = contentRef.current
     if (!root) return
 
-    const imgs = Array.from(root.querySelectorAll("figure.wp-block-gallery img")) as HTMLImageElement[]
-    if (!imgs.length) return
+    // Usamos *delegação* de evento para evitar o bug em que o HTML do WP
+    // é re-renderizado e as referências dos <img> mudam (listeners antigos
+    // deixam de funcionar após abrir/fechar o lightbox).
+    const getImgs = () => Array.from(root.querySelectorAll("figure.wp-block-gallery img")) as HTMLImageElement[]
 
-    const sources = imgs
-      .map((img) => img.currentSrc || img.src)
-      .filter(Boolean)
-
-    const cleanups: Array<() => void> = []
-
-    imgs.forEach((img, idx) => {
+    // Apenas um toque visual (cursor) – seguro reaplicar.
+    getImgs().forEach((img) => {
       img.style.cursor = "zoom-in"
-      const onClick = (e: MouseEvent) => {
-        e.preventDefault()
-        e.stopPropagation()
-        setLightbox({ open: true, images: sources, index: idx })
-      }
-      img.addEventListener("click", onClick)
-      cleanups.push(() => img.removeEventListener("click", onClick))
     })
 
-    return () => cleanups.forEach((fn) => fn())
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as unknown
+
+      // Clique direto no <img>
+      let imgEl: HTMLImageElement | null = target instanceof HTMLImageElement ? target : null
+
+      // Clique em <a> envolvendo o <img>
+      if (!imgEl && target instanceof HTMLElement) {
+        const maybeImg = target.querySelector?.("img")
+        if (maybeImg instanceof HTMLImageElement) imgEl = maybeImg
+      }
+
+      if (!imgEl) return
+      if (!imgEl.closest("figure.wp-block-gallery")) return
+
+      e.preventDefault()
+      e.stopPropagation()
+
+      const imgs = getImgs()
+      if (!imgs.length) return
+
+      const sources = imgs.map((img) => img.currentSrc || img.src).filter(Boolean)
+      const idx = Math.max(0, imgs.indexOf(imgEl))
+
+      setLightbox({ open: true, images: sources, index: idx })
+    }
+
+    root.addEventListener("click", onClick)
+    return () => root.removeEventListener("click", onClick)
   }, [conteudo])
 
   // Bloqueia scroll do body quando o lightbox estiver aberto
