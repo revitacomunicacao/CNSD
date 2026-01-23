@@ -127,7 +127,7 @@ export default function Biblioteca() {
                   Horário de Funcionamento
                 </h2>
                 <p className="text-lg text-gray-700">
-                  De segunda a sexta-feira das 7h às 18h, com intervalo das 12h00 às 13h.
+                  De segunda a sexta-feira das 7h às 18h, com intervalo das 12h às 13h.
                 </p>
               </div>
 
