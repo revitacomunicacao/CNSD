@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import Autoplay from "embla-carousel-autoplay";
 import { useContent } from "@/hooks/useContent";
 import useSeo from "@/hooks/useSeo";
 import { IHome } from "./home/types";
@@ -25,6 +27,10 @@ interface IGaleriaDeFotos {
 }
 
 export default function HomePage() {
+  const bannerAutoplay = useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  );
+
   useSeo({
     title: "Colégio Nossa Senhora das Dores - CNSD",
     description: "Colégio Nossa Senhora das Dores - Educação de qualidade em Uberaba",
@@ -78,6 +84,7 @@ export default function HomePage() {
           <Carousel
             className="w-full h-full"
             opts={{ align: "start", loop: true }}
+            plugins={banners.length > 1 ? [bannerAutoplay.current] : undefined}
           >
             <CarouselContent className="h-full">
               {banners.map((b: any, idx: number) => {
